@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <context:component-scan base-package="com.chengzg.oms">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <aop:aspectj-autoproxy />
+
+    <task:annotation-driven />
+
+        <beans profile="dev">
+            <context:property-placeholder location="classpath:project-dev.properties" ignore-unresolvable="true"/>
+            <import resource="spring-config-datasource-druid.xml" />
+            <import resource="spring-config-dao-sharding.xml" />
+            <import resource="spring-config-service.xml" />
+        </beans>
+
+    <beans profile="test">
+        <context:property-placeholder location="classpath:project-test.properties" ignore-unresolvable="true"/>
+        <import resource="spring-config-datasource-druid.xml" />
+        <import resource="spring-config-dao-sharding.xml" />
+        <import resource="spring-config-service.xml" />
+    </beans>
+
+    <beans profile="prod">
+        <context:property-placeholder location="classpath:project-prod.properties" ignore-unresolvable="true"/>
+        <import resource="spring-config-datasource-druid.xml" />
+        <import resource="spring-config-dao-sharding.xml" />
+        <import resource="spring-config-service.xml" />
+    </beans>
+
+
+</beans>

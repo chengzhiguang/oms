@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender"><!-- ConsoleAppender 把日志添加到控制台 -->
+        <!-- 典型的日志pattern -->
+        <encoder><!-- <encoder>：对日志进行格式化 -->
+            <!--<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="com.ziroom.tech.scaffold.boot.log.logback.appender.PlatformRollingFileAppender">
+        <rollingPolicy class="com.ziroom.tech.scaffold.boot.log.logback.appender.PlatformTimeBasedRollingPolicy">
+            <fileNamePattern>/home/chengzg/logs/wxshop.chengzg.com/wxshop.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date [%5p] - [%t] - %25c method:%M line:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

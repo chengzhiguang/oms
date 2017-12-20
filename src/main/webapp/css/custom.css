@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+
+#platformdatagrid {
+   table-layout: fixed;
+   text-align: right;
+}
+
+td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
