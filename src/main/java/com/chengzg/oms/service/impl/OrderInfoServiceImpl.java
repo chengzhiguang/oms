@@ -67,6 +67,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             orderInfo.setRows(orderInfo.getPageSize());
         }
         List<OrderInfo> list = orderInfoMapper.searchListByWhere(orderInfo);
+        for (OrderInfo item : list) {
+            item.setOrderTimeStr(item.getOrderTime() == null ? "" : TimeUtility.formatTimeStr(item.getOrderTime(), TimeUtility.TIME_FORMAT_YYYY_MM_DD_HH_MM_SS));
+            item.setComfireTimeStr(item.getComfireTime() == null ? "" : TimeUtility.formatTimeStr(item.getComfireTime(), TimeUtility.TIME_FORMAT_YYYY_MM_DD_HH_MM_SS));
+            item.setFinishTimeStr(item.getFinishTime() == null ? "" : TimeUtility.formatTimeStr(item.getFinishTime(), TimeUtility.TIME_FORMAT_YYYY_MM_DD_HH_MM_SS));
+        }
         return list;
     }
 

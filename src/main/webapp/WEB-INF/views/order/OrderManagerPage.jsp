@@ -90,22 +90,94 @@
                 field : 'orderYear',
                 width : 40,
 
+            } ,{
+                title : '订单号',
+                field : 'orderCode',
+                width : 40,
+
+            } ,{
+                title : '商品名称',
+                field : 'googsName',
+                width : 40,
+
+            } ,{
+                title : '订购数量',
+                field : 'totalCount',
+                width : 40,
+
+            } ,{
+                title : '支付方式',
+                field : 'payType',
+                width : 40,
+
+            } ,{
+                title : '下单时间',
+                field : 'orderTimeStr',
+                width : 40,
+            } ,{
+                title : '京东价',
+                field : 'jdPrice',
+                width : 40,
+                formatter : function(value, rowData, rowIndex) {
+                    var date = rowData.jdPrice;
+                    return date/100;
+                }
             }, {
-                title : '用户姓名',
-                field : 'userName',
-                width : 50,
+                title : '订单金额',
+                field : 'orderAmount',
+                width : 40,
+                formatter : function(value, rowData, rowIndex) {
+                    var date = rowData.orderAmount;
+                    return date/100;
+                }
             }, {
-                title : '订单状态',
-                field : 'orderStatus',
-                width : 50,
+                title : '结算价',
+                field : 'settmentMent',
+                width : 40,
+                formatter : function(value, rowData, rowIndex) {
+                    var date = rowData.settmentMent;
+                    return date/100;
+                }
             }, {
                 title : '余额支付金额',
+                field : 'accountAmount',
+                width : 40,
+                formatter : function(value, rowData, rowIndex) {
+                    var date = rowData.accountAmount;
+                    return date/100;
+                }
+            }, {
+                title : '应付金额',
                 field : 'shouldAmount',
                 width : 40,
                 formatter : function(value, rowData, rowIndex) {
                     var date = rowData.shouldAmount;
                     return date/100;
                 }
+            }, {
+                title : '订单状态',
+                field : 'orderStatus',
+                width : 50,
+            }, {
+                title : '订单类型',
+                field : 'billType',
+                width : 50,
+            }, {
+                title : '下单帐号',
+                field : 'userCode',
+                width : 50,
+            }, {
+                title : '客户姓名',
+                field : 'userName',
+                width : 50,
+            }, {
+                title : '客户地址',
+                field : 'userAddress',
+                width : 50,
+            }, {
+                title : '联系电话',
+                field : 'userPhone',
+                width : 50,
             }, {
                 title : '商品名称',
                 field : 'googsName',

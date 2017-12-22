@@ -27,6 +27,8 @@ public class OrderInfo {
 
     private Date orderTime;
 
+    private String orderTimeStr;
+
     private Integer jdPrice;
 
     private Integer orderAmount;
@@ -65,11 +67,15 @@ public class OrderInfo {
 
     private Date comfireTime;
 
+    private String comfireTimeStr;
+
     private String vatInvoice;
 
     private String articleNum;
 
     private Date finishTime;
+
+    private String finishTimeStr;
 
     private String orderSource;
 
