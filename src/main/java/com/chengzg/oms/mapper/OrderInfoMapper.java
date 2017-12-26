@@ -1,6 +1,7 @@
 package com.chengzg.oms.mapper;
 
 import com.chengzg.oms.entity.OrderInfo;
+import com.chengzg.oms.model.OrderInfoStatistics;
 import com.chengzg.oms.model.req.SearchOrderInfoReq;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,6 @@ public interface OrderInfoMapper {
     Integer searchCountByWhere(SearchOrderInfoReq orderInfo);
 
     List<OrderInfo> searchListByWhere(SearchOrderInfoReq orderInfo);
+
+    List<OrderInfoStatistics> getStatisticsListByYear(String orderYear);
 }

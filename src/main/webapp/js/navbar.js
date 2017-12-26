@@ -5,9 +5,12 @@ function getUrl(noteText) {
 		url = contextPath + '/page/order/toImportOrderPage';
 	} else if(noteText == '订单查询') {
 		url = contextPath + '/page/order/toOrderManagerPage';
-	} else if(noteText == '销售统计') {
-        url = contextPath + '/page/order/toOrderManagerPage';
+	} else if(noteText == '报表生成') {
+        url = contextPath + '/page/orderreport/toOrderReportPage';
+    } else if(noteText == '商品维护') {
+        url = contextPath + '/page/goods/toGoodsManagerPage';
     }
+
 	return url;
 }
   

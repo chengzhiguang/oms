@@ -565,4 +565,21 @@
     from tb_order_info
     <include refid="whereSql"/>
   </select>
+
+
+  <select id="getStatisticsListByYear" parameterType="java.lang.String" resultType="com.chengzg.oms.model.OrderInfoStatistics">
+    SELECT
+    goods_code goodsCode,
+    SUM(total_count) sumCount,
+    SUM(total_count * jd_price) sumAmount,
+    SUM(luggage_amount) sumLuggageAmount,
+	SUM(settment_ment) sumSettmentAmount
+    FROM
+    tb_order_info
+    WHERE
+    is_del = 0
+    AND order_year = #{orderYear,jdbcType=VARCHAR}
+    GROUP BY
+    goods_code
+  </select>
 </mapper>

@@ -68,7 +68,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="tb_order_info" domainObjectName="OrderInfo"
+        <table tableName="tb_order_report" domainObjectName="OrderReport"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

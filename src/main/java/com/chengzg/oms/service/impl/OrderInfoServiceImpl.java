@@ -85,9 +85,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             return null;
         }
 
-        int hashCode = orderTimeStr.hashCode();
-        String orderYear = "2017";
-        if (hashCode % 5 == 0) {
+        //int hashCode = orderTimeStr.hashCode();
+        String orderYear = TimeUtility.formatTimeStr(orderDate, "yyyy");
+        /*if (hashCode % 5 == 0) {
             orderYear = "2018";
         } else if (hashCode % 5 == 1) {
             orderYear = "2019";
@@ -97,7 +97,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             orderYear = "2016";
         } else if (hashCode % 5 == 4) {
             orderYear = "2015";
-        }
+        }*/
         OrderInfo orderInfo = OrderInfo
                 .builder()
                 .articleNum(orderObj.getString("货号"))

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengzg.oms.mapper.OrderReportMapper">
+  <resultMap id="BaseResultMap" type="com.chengzg.oms.entity.OrderReport">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_year" jdbcType="VARCHAR" property="orderYear" />
+    <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="sum_count" jdbcType="INTEGER" property="sumCount" />
+    <result column="unit_price" jdbcType="INTEGER" property="unitPrice" />
+    <result column="sum_settment_amount" jdbcType="INTEGER" property="sumSettmentAmount" />
+    <result column="sum_luggage_amount" jdbcType="INTEGER" property="sumLuggageAmount" />
+    <result column="marketing_costs" jdbcType="INTEGER" property="marketingCosts" />
+    <result column="sum_amount" jdbcType="INTEGER" property="sumAmount" />
+    <result column="sum_jin" jdbcType="DECIMAL" property="sumJin" />
+    <result column="luggage_jin" jdbcType="INTEGER" property="luggageJin" />
+    <result column="marketing_fee_jin" jdbcType="INTEGER" property="marketingFeeJin" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_mofy_time" jdbcType="TIMESTAMP" property="lastMofyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_year, goods_code, goods_name, sum_count, unit_price, sum_settment_amount,
+    sum_luggage_amount, marketing_costs, sum_amount, sum_jin, luggage_jin, marketing_fee_jin, 
+    is_del, create_time, last_mofy_time
+  </sql>
+
+  <insert id="insert" parameterType="com.chengzg.oms.entity.OrderReport">
+    insert into tb_order_report (id, order_year, goods_code,
+      goods_name, sum_count, unit_price, 
+      sum_settment_amount, sum_luggage_amount, marketing_costs, 
+      sum_amount, sum_jin, luggage_jin, 
+      marketing_fee_jin, is_del, create_time, 
+      last_mofy_time)
+    values (#{id,jdbcType=BIGINT}, #{orderYear,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR},
+      #{goodsName,jdbcType=VARCHAR}, #{sumCount,jdbcType=INTEGER}, #{unitPrice,jdbcType=INTEGER}, 
+      #{sumSettmentAmount,jdbcType=INTEGER}, #{sumLuggageAmount,jdbcType=INTEGER}, #{marketingCosts,jdbcType=INTEGER}, 
+      #{sumAmount,jdbcType=INTEGER}, #{sumJin,jdbcType=DECIMAL}, #{luggageJin,jdbcType=INTEGER}, 
+      #{marketingFeeJin,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastMofyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengzg.oms.entity.OrderReport">
+    insert into tb_order_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderYear != null">
+        order_year,
+      </if>
+      <if test="goodsCode != null">
+        goods_code,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="sumCount != null">
+        sum_count,
+      </if>
+      <if test="unitPrice != null">
+        unit_price,
+      </if>
+      <if test="sumSettmentAmount != null">
+        sum_settment_amount,
+      </if>
+      <if test="sumLuggageAmount != null">
+        sum_luggage_amount,
+      </if>
+      <if test="marketingCosts != null">
+        marketing_costs,
+      </if>
+      <if test="sumAmount != null">
+        sum_amount,
+      </if>
+      <if test="sumJin != null">
+        sum_jin,
+      </if>
+      <if test="luggageJin != null">
+        luggage_jin,
+      </if>
+      <if test="marketingFeeJin != null">
+        marketing_fee_jin,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastMofyTime != null">
+        last_mofy_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderYear != null">
+        #{orderYear,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null">
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="sumCount != null">
+        #{sumCount,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null">
+        #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="sumSettmentAmount != null">
+        #{sumSettmentAmount,jdbcType=INTEGER},
+      </if>
+      <if test="sumLuggageAmount != null">
+        #{sumLuggageAmount,jdbcType=INTEGER},
+      </if>
+      <if test="marketingCosts != null">
+        #{marketingCosts,jdbcType=INTEGER},
+      </if>
+      <if test="sumAmount != null">
+        #{sumAmount,jdbcType=INTEGER},
+      </if>
+      <if test="sumJin != null">
+        #{sumJin,jdbcType=DECIMAL},
+      </if>
+      <if test="luggageJin != null">
+        #{luggageJin,jdbcType=INTEGER},
+      </if>
+      <if test="marketingFeeJin != null">
+        #{marketingFeeJin,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastMofyTime != null">
+        #{lastMofyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.OrderReport">
+    update tb_order_report
+    <set>
+      <if test="orderYear != null">
+        order_year = #{orderYear,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null">
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="sumCount != null">
+        sum_count = #{sumCount,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null">
+        unit_price = #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="sumSettmentAmount != null">
+        sum_settment_amount = #{sumSettmentAmount,jdbcType=INTEGER},
+      </if>
+      <if test="sumLuggageAmount != null">
+        sum_luggage_amount = #{sumLuggageAmount,jdbcType=INTEGER},
+      </if>
+      <if test="marketingCosts != null">
+        marketing_costs = #{marketingCosts,jdbcType=INTEGER},
+      </if>
+      <if test="sumAmount != null">
+        sum_amount = #{sumAmount,jdbcType=INTEGER},
+      </if>
+      <if test="sumJin != null">
+        sum_jin = #{sumJin,jdbcType=DECIMAL},
+      </if>
+      <if test="luggageJin != null">
+        luggage_jin = #{luggageJin,jdbcType=INTEGER},
+      </if>
+      <if test="marketingFeeJin != null">
+        marketing_fee_jin = #{marketingFeeJin,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastMofyTime != null">
+        last_mofy_time = #{lastMofyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_year = #{orderYear,jdbcType=VARCHAR} and  id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengzg.oms.entity.OrderReport">
+    update tb_order_report
+    set order_year = #{orderYear,jdbcType=VARCHAR},
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      sum_count = #{sumCount,jdbcType=INTEGER},
+      unit_price = #{unitPrice,jdbcType=INTEGER},
+      sum_settment_amount = #{sumSettmentAmount,jdbcType=INTEGER},
+      sum_luggage_amount = #{sumLuggageAmount,jdbcType=INTEGER},
+      marketing_costs = #{marketingCosts,jdbcType=INTEGER},
+      sum_amount = #{sumAmount,jdbcType=INTEGER},
+      sum_jin = #{sumJin,jdbcType=DECIMAL},
+      luggage_jin = #{luggageJin,jdbcType=INTEGER},
+      marketing_fee_jin = #{marketingFeeJin,jdbcType=INTEGER},
+      is_del = #{isDel,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_mofy_time = #{lastMofyTime,jdbcType=TIMESTAMP}
+    where order_year = #{orderYear,jdbcType=VARCHAR} and id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectByGoodsAndYear" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_order_report
+    where is_del = 0 and
+    order_year = #{orderYear,jdbcType=VARCHAR}
+    and goods_code = #{goodsCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -17,14 +17,15 @@
     <sharding:data-source id="shardingDataSource">
         <sharding:sharding-rule data-source-names="db_wxshop_0" default-data-source-name="db_wxshop_0">
             <sharding:table-rules>
-                <sharding:table-rule logic-table="tb_order_info" actual-data-nodes="db_wxshop_0.tb_order_info_2014,db_wxshop_0.tb_order_info_2015,db_wxshop_0.tb_order_info_2016,db_wxshop_0.tb_order_info_2017,db_wxshop_0.tb_order_info_2018,db_wxshop_0.tb_order_info_2019,db_wxshop_0.tb_order_info_2020," table-strategy-ref="tableStrategy" />
+                <sharding:table-rule logic-table="tb_order_info" actual-data-nodes="db_wxshop_0.tb_order_info_2017,db_wxshop_0.tb_order_info_2018,db_wxshop_0.tb_order_info_2019,db_wxshop_0.tb_order_info_2020," table-strategy-ref="tableStrategy" />
+                <sharding:table-rule logic-table="tb_order_report" actual-data-nodes="db_wxshop_0.tb_order_report_2017,db_wxshop_0.tb_order_report_2018,db_wxshop_0.tb_order_report_2019,db_wxshop_0.tb_order_report_2020," table-strategy-ref="tableStrategy" />
             </sharding:table-rules>
             <sharding:binding-table-rules>
-                <sharding:binding-table-rule logic-tables="tb_order_info" />
+                <sharding:binding-table-rule logic-tables="tb_order_info,tb_order_report" />
             </sharding:binding-table-rules>
         </sharding:sharding-rule>
         <sharding:props>
-            <prop key="sql.show">false</prop>
+            <prop key="sql.show">true</prop>
         </sharding:props>
     </sharding:data-source>
 

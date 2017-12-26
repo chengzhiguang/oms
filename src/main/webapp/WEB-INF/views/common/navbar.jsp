@@ -17,7 +17,20 @@
                 <li>  
                     <span>订单查询</span>
                 </li>
+				<li>
+					<span>商品维护</span>
+				</li>
+				<li>
+					<span>报表生成</span>
+				</li>
             </ul>  
+		</div>
+		<%--<div class="easyui-panel" id="divGoodsInfo" data-options="fit:true,border:false"  title="商品信息" style="padding:10px;">
+			<ul id="GoodsInfoTree">
+				<li>
+					<span>商品维护</span>
+				</li>
+			</ul>
 		</div>
 		<div class="easyui-panel" id="divOrderStatistics" data-options="fit:true,border:false"  title="销售统计" style="padding:10px;">
 			<ul id="OrderStatisticsTree">
@@ -25,7 +38,7 @@
 					<span>销售统计</span>
 				</li>
 			</ul>
-		</div>
+		</div>--%>
 	</div>
 	
 </div>
