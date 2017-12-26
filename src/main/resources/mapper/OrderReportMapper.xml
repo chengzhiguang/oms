@@ -222,4 +222,38 @@
     order_year = #{orderYear,jdbcType=VARCHAR}
     and goods_code = #{goodsCode,jdbcType=VARCHAR}
   </select>
+
+
+  <sql id="whereSql">
+    <where>
+      AND is_del = 0
+      AND order_year = #{orderYear,jdbcType=VARCHAR}
+      <if test="goodsCode != null and goodsCode != ''">
+        AND goods_code = #{goodsCode,jdbcType=VARCHAR}
+      </if>
+
+    </where>
+  </sql>
+
+  <sql id="limitSql">
+    <if test="start != null and rows != null">
+      LIMIT #{start}, #{rows}
+    </if>
+  </sql>
+
+  <select id="searchListByWhere" parameterType="com.chengzg.oms.model.req.SearchReportReq" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_order_report
+    <include refid="whereSql"/>
+    order by id DESC
+    <include refid="limitSql"/>
+  </select>
+
+  <select id="searchCountByWhere" parameterType="com.chengzg.oms.model.req.SearchReportReq" resultType="java.lang.Integer">
+    select
+    COUNT(id)
+    from tb_order_report
+    <include refid="whereSql"/>
+  </select>
 </mapper>

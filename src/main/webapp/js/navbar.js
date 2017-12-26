@@ -9,7 +9,10 @@ function getUrl(noteText) {
         url = contextPath + '/page/orderreport/toOrderReportPage';
     } else if(noteText == '商品维护') {
         url = contextPath + '/page/goods/toGoodsManagerPage';
+    } else if(noteText == '报表查看') {
+        url = contextPath + '/page/orderreport/toReportPage';
     }
+
 
 	return url;
 }

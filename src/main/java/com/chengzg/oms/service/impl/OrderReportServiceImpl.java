@@ -7,6 +7,7 @@ import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.mapper.OrderInfoMapper;
 import com.chengzg.oms.mapper.OrderReportMapper;
 import com.chengzg.oms.model.OrderInfoStatistics;
+import com.chengzg.oms.model.req.SearchReportReq;
 import com.chengzg.oms.service.GoodsInfoService;
 import com.chengzg.oms.service.OrderReportService;
 import org.slf4j.Logger;
@@ -115,5 +116,21 @@ public class OrderReportServiceImpl implements OrderReportService {
             }
         }
         return  1;
+    }
+
+    @Override
+    public Integer searchCountByWhere(SearchReportReq orderInfo) {
+        Integer count = orderReportMapper.searchCountByWhere(orderInfo);
+        return count;
+    }
+
+    @Override
+    public List<OrderReport> searchListByWhere(SearchReportReq orderInfo) {
+        if (orderInfo.getPageNum() != null && orderInfo.getPageSize() != null) {
+            orderInfo.setStart((orderInfo.getPageNum() - 1) * orderInfo.getPageSize());
+            orderInfo.setRows(orderInfo.getPageSize());
+        }
+        List<OrderReport> list = orderReportMapper.searchListByWhere(orderInfo);
+        return list;
     }
 }

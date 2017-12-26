@@ -1,8 +1,11 @@
 package com.chengzg.oms.mapper;
 
 import com.chengzg.oms.entity.OrderReport;
+import com.chengzg.oms.model.req.SearchReportReq;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface OrderReportMapper {
@@ -16,5 +19,9 @@ public interface OrderReportMapper {
     int updateByPrimaryKey(OrderReport record);
 
     OrderReport selectByGoodsAndYear(@Param("goodsCode") String goodsCode, @Param("orderYear") String orderyear);
+
+    Integer searchCountByWhere(SearchReportReq orderInfo);
+
+    List<OrderReport> searchListByWhere(SearchReportReq orderInfo);
 
 }

@@ -23,6 +23,9 @@
 				<li>
 					<span>报表生成</span>
 				</li>
+				<li>
+					<span>报表查看</span>
+				</li>
             </ul>  
 		</div>
 		<%--<div class="easyui-panel" id="divGoodsInfo" data-options="fit:true,border:false"  title="商品信息" style="padding:10px;">
