@@ -58,8 +58,8 @@ public class OrderReportServiceImpl implements OrderReportService {
             Integer sumLuggageAmount = statistics.getSumLuggageAmount();//总运费
             GoodsInfo goodsInfo = goodsInfoService.getGoodsInfo(goodsCode);
             if (goodsInfo == null) {
-                continue;
-                //throw new ServiceException(100, "商品编码【" + goodsCode + "】没有找到商品信息");
+                //continue;
+                throw new ServiceException(100, "商品编码【" + goodsCode + "】没有找到商品信息");
             }
             Integer goodsWeight = goodsInfo.getGoodsWeight();//商品重量g
             Integer marketingCosts = goodsInfo.getMarketingCosts();//总营销费用
