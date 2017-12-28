@@ -60,6 +60,7 @@ public class GoodsInfoController extends BaseController {
     public PageResponse searchOrder(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info(" importOrderInfo start  !");
+        String goodsSku = HttpUtil.getParameter(request, "goodsSku", null);
 
         String goodsCode = HttpUtil.getParameter(request, "goodsCode", null);
         String goodsName = HttpUtil.getParameter(request, "goodsName", null);
@@ -69,6 +70,7 @@ public class GoodsInfoController extends BaseController {
         String orderCode = HttpUtil.getParameter(request, "orderCode", null);
         SearchGoodsInfoReq where = SearchGoodsInfoReq.builder()
                 .goodsCode(goodsCode)
+                .goodsSku(goodsSku)
                 .goodsName(goodsName)
                 .pageNum(pageNum)
                 .pageSize(pageSize)
@@ -102,6 +104,7 @@ public class GoodsInfoController extends BaseController {
 
         logger.info(" saveGoodsInfo start  !");
         String goodsCode = HttpUtil.getParameter(request, "goodsCode", null);
+        String goodsSku = HttpUtil.getParameter(request, "goodsSku", null);
         String goodsName = HttpUtil.getParameter(request, "goodsName", null);
         Integer jdPrice = HttpUtil.getIntegerParameter(request, "jdPrice", null);
         Integer marketPrice = HttpUtil.getIntegerParameter(request, "marketPrice", null);
@@ -112,6 +115,7 @@ public class GoodsInfoController extends BaseController {
         GoodsInfo goodsInfo = GoodsInfo
                 .builder()
                 .goodsCode(goodsCode)
+                .goodsSku(goodsSku)
                 .goodsName(goodsName)
                 .jdPrice(jdPrice)
                 .marketPrice(marketPrice)
@@ -128,10 +132,10 @@ public class GoodsInfoController extends BaseController {
     public @ResponseBody
     ModelAndView toMofyGoodsInfoPage(HttpServletRequest request, HttpServletResponse response) {
         try {
-            String goodsCode = HttpUtil.getParameter(request, "goodsCode", null);
-            Asserts.checkNullOrEmpty(goodsCode, "商品编号不能为空");
+            String goodsSku = HttpUtil.getParameter(request, "goodsSku", null);
+            Asserts.checkNullOrEmpty(goodsSku, "商品编号不能为空");
 
-            GoodsInfo goodsInfo = goodsInfoService.getGoodsInfoByCode(goodsCode);
+            GoodsInfo goodsInfo = goodsInfoService.getGoodsInfoByCode(goodsSku);
             Asserts.checkNullOrEmpty(goodsInfo, "商品为空");
             request.setAttribute("goodsInfo", goodsInfo);
 

@@ -21,7 +21,10 @@
         <legend>筛选</legend>
         <table class="tableForm">
             <tr>
-
+                <th>商品SKU：</th>
+                <th>
+                    <input id="goodsSku" name="goodsSku" class="easyui-textbox" style="width:200px;height:32px">
+                </th>
                 <th>商品编号：</th>
                 <th>
                     <input id="goodsCode" name="goodsCode" class="easyui-textbox" style="width:200px;height:32px">
@@ -79,6 +82,11 @@
                     return rowIndex+1;
                 }
             } ,{
+                title : '商品SKU',
+                field : 'goodsSku',
+                width : 40,
+
+            } ,{
                 title : '商品编号',
                 field : 'goodsCode',
                 width : 40,
@@ -132,7 +140,7 @@
                 width : 80,
                 formatter : function(value, rowData, rowIndex) {
 //			    return '<a href="' + contextPath + '/manager/userManagerController/toUserDetailsPage?uid=' + rowData.uid + '">查看</a>';
-                    var mark = '<span style="font-family:\'STHeitiSC-Light\', \'Heiti SC Light\', \'Heiti SC\';font-weight:200;color:#0099FF;" onclick="javascript:toModifyPage(\'' + rowData.goodsCode + '\');">修改</span>';
+                    var mark = '<span style="font-family:\'STHeitiSC-Light\', \'Heiti SC Light\', \'Heiti SC\';font-weight:200;color:#0099FF;" onclick="javascript:toModifyPage(\'' + rowData.goodsSku + '\');">修改</span>';
                     return mark;
                 }
             }] ],
@@ -159,6 +167,7 @@
     function searchFun() {
         datagrid.datagrid('load', {
             goodsCode : $('input[name=goodsCode]').val(),
+            goodsSku : $('input[name=goodsSku]').val(),
             goodsName : $('input[name=goodsName]').val(),
         });
     }
@@ -167,8 +176,8 @@
         showMyWindow("添加商品信息", contextPath + "/page/goods/toAddGoodsInfoPage", 600, 500);
     }
 
-    function toModifyPage(goodsCode) {
-        showMyWindow("修改商品信息", contextPath + "/page/goods/toMofyGoodsInfoPage?goodsCode="+goodsCode, 600, 500);
+    function toModifyPage(goodsSku) {
+        showMyWindow("修改商品信息", contextPath + "/page/goods/toMofyGoodsInfoPage?goodsSku="+goodsSku, 600, 500);
     }
 
 </script>

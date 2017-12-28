@@ -17,8 +17,8 @@ public interface GoodsInfoService {
 
     List<GoodsInfo> searchListByWhere(SearchGoodsInfoReq orderInfo);
 
-    GoodsInfo getGoodsInfoByCode(String code);
+    GoodsInfo getGoodsInfoByCode(String goodsSku);
 
-    GoodsInfo getGoodsInfo(String code);
+    GoodsInfo getGoodsInfo(String sku);
 
 }

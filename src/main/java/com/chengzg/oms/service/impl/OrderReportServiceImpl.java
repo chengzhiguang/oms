@@ -50,16 +50,23 @@ public class OrderReportServiceImpl implements OrderReportService {
         List<OrderReport> reportList = new ArrayList<OrderReport>();
 
         for (OrderInfoStatistics statistics : statisticsList) {
-            String goodsCode = statistics.getGoodsCode();
+            String goodsSku = statistics.getGoodsCode();
             Integer sumCount = statistics.getSumCount();//总单量
             //Integer sumAmount = statistics.getSumAmount();//总销售量
             Integer jdPrice = statistics.getSumSettmentAmount()/sumCount;//每单客单价
             Integer sumSettmentAmount = statistics.getSumSettmentAmount();//总结算金额
             Integer sumLuggageAmount = statistics.getSumLuggageAmount();//总运费
-            GoodsInfo goodsInfo = goodsInfoService.getGoodsInfo(goodsCode);
+            GoodsInfo goodsInfo = goodsInfoService.getGoodsInfo(goodsSku);
             if (goodsInfo == null) {
+                goodsInfo = GoodsInfo
+                        .builder()
+                        .goodsWeight(1)
+                        .marketingCosts(1)
+                        .goodsSku(goodsSku)
+                        .goodsName("没有商品")
+                        .build();
                 //continue;
-                throw new ServiceException(100, "商品编码【" + goodsCode + "】没有找到商品信息");
+                //throw new ServiceException(100, "商品编码【" + goodsSku + "】没有找到商品信息");
             }
             Integer goodsWeight = goodsInfo.getGoodsWeight();//商品重量g
             Integer marketingCosts = goodsInfo.getMarketingCosts();//总营销费用
@@ -70,7 +77,9 @@ public class OrderReportServiceImpl implements OrderReportService {
 
             //总斤数
             BigDecimal sumJin = new BigDecimal(sumCount).multiply(new BigDecimal(goodsWeight)).divide(new BigDecimal(500), 2, RoundingMode.HALF_UP);
-
+            if (sumJin.intValue() <= 0) {
+                sumJin = new BigDecimal(1);
+            }
             //平均每斤运费
             BigDecimal luggageJin = new BigDecimal(sumLuggageAmount).divide(sumJin, 2, RoundingMode.CEILING.HALF_UP);
             //每斤营销费用
@@ -79,7 +88,7 @@ public class OrderReportServiceImpl implements OrderReportService {
             OrderReport report = OrderReport
                     .builder()
                     .createTime(new Date())
-                    .goodsCode(goodsInfo.getGoodsCode())
+                    .goodsCode(goodsInfo.getGoodsSku())
                     .goodsName(goodsInfo.getGoodsName())
                     .isDel(0)
                     .lastMofyTime(new Date())

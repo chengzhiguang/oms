@@ -13,6 +13,8 @@ import java.util.Date;
 public class GoodsInfo {
     private Long id;
 
+    private String goodsSku;
+
     private String goodsCode;
 
     private String goodsName;

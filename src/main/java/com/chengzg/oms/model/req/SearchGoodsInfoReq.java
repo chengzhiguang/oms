@@ -12,6 +12,7 @@ import lombok.*;
 @Builder
 @ToString
 public class SearchGoodsInfoReq {
+    private String goodsSku;
     private String goodsCode;
 
     private String goodsName;

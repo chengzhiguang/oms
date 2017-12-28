@@ -22,6 +22,10 @@
     <table class="tableForm"  cellspacing="8">
         <tr  align="right">
             <th>商品编号：</th>
+            <td><input id="goodsSku" name="goodsSku" class="easyui-textbox" style="width:200px;height:30px" value="${goodsInfo.goodsSku}" disabled="disabled"></td>
+        </tr>
+        <tr  align="right">
+            <th>商品编号：</th>
             <td><input id="goodsCode" name="goodsCode" class="easyui-textbox" style="width:200px;height:30px" value="${goodsInfo.goodsCode}" disabled="disabled"></td>
         </tr>
         <tr  align="right">
@@ -62,6 +66,7 @@
             return;
         }
 
+        var goodsSku  = $("#goodsSku").val();
         var goodsCode = $("#goodsCode").val();
         var goodsName = $("#goodsName").val();
         var jdPrice = $("#jdPrice").val();
@@ -82,6 +87,7 @@
                 "goodsWeight":goodsWeight,
                 "discount":discount,
                 "marketingCosts":marketingCosts,
+                "goodsSku":goodsSku,
             },
             dataType:"json",
             success:function(data) {

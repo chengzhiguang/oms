@@ -91,10 +91,10 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public GoodsInfo getGoodsInfoByCode(String code) {
+    public GoodsInfo getGoodsInfoByCode(String goodsSku) {
         SearchGoodsInfoReq where = SearchGoodsInfoReq
                 .builder()
-                .goodsCode(code)
+                .goodsSku(goodsSku)
                 .build();
         List<GoodsInfo> goodsInfoList = goodsInfoMapper.searchListByWhere(where);
         if (goodsInfoList == null || goodsInfoList.size() <= 0) {
@@ -105,7 +105,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public GoodsInfo getGoodsInfo(String code) {
+    public GoodsInfo getGoodsInfo(String sku) {
         Map<String, GoodsInfo> map = null;
         try {
             map = singleDataCache.get(allGoodsKey, new Callable<Map<String, GoodsInfo>>() {
@@ -117,8 +117,8 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
                         Map<String, GoodsInfo> map2 = new HashMap();
                         for(int i = 0; i < list.size(); i++) {
                             GoodsInfo obj = list.get(i);
-                            String code = obj.getGoodsCode();
-                            map2.put(code, obj);
+                            String sku = obj.getGoodsSku();
+                            map2.put(sku, obj);
                         }
                         return map2;
                     }
@@ -131,6 +131,6 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         if (map == null) {
             return null;
         }
-        return map.get(code);
+        return map.get(sku);
     }
 }

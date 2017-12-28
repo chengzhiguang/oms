@@ -79,7 +79,7 @@
                 width : 40,
 
             } ,{
-                title : '商品编号',
+                title : '商品SKU',
                 field : 'goodsCode',
                 width : 40,
 
