@@ -17,7 +17,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"><!-- 当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名 -->
             <fileNamePattern>${catalina.base}/logs/business-%d{yyyy-MM-dd}_%i.log.zip</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"><!--  按时间回滚的同时，按文件大小来回滚 -->
-                <maxFileSize>100MB</maxFileSize>
+                <maxFileSize>500MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
