@@ -25,7 +25,7 @@
             </sharding:binding-table-rules>
         </sharding:sharding-rule>
         <sharding:props>
-            <prop key="sql.show">true</prop>
+            <prop key="sql.show">false</prop>
         </sharding:props>
     </sharding:data-source>
 
