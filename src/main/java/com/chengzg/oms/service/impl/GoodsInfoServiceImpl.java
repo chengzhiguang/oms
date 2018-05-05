@@ -3,9 +3,15 @@ package com.chengzg.oms.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chengzg.oms.entity.GoodsInfo;
+import com.chengzg.oms.entity.SkuInfo;
+import com.chengzg.oms.entity.SpuInfo;
 import com.chengzg.oms.entity.WhiteData;
 import com.chengzg.oms.mapper.GoodsInfoMapper;
+import com.chengzg.oms.mapper.SkuInfoMapper;
+import com.chengzg.oms.mapper.SpuInfoMapper;
 import com.chengzg.oms.model.req.SearchGoodsInfoReq;
+import com.chengzg.oms.model.req.SearchSkuInfoReq;
+import com.chengzg.oms.model.req.SearchSpuInfoReq;
 import com.chengzg.oms.service.GoodsInfoService;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -30,6 +36,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
     @Autowired
     private GoodsInfoMapper goodsInfoMapper;
+
+    @Autowired
+    private SpuInfoMapper spuInfoMapper;
+
+    @Autowired
+    private SkuInfoMapper skuInfoMapper;
 
     private Cache<String,List> goodsInfoCache = CacheBuilder
             .newBuilder()
@@ -132,5 +144,43 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             return null;
         }
         return map.get(sku);
+    }
+
+    @Override
+    public Integer searchSpuCountByWhere(SearchSpuInfoReq spuInfoReq) {
+        Integer count = spuInfoMapper.searchCountByWhere(spuInfoReq);
+        return count;
+    }
+
+    @Override
+    public List<SpuInfo> searchSpuListByWhere(SearchSpuInfoReq spuInfoReq) {
+        if (spuInfoReq.getPageNum() != null && spuInfoReq.getPageSize() != null) {
+            spuInfoReq.setStart((spuInfoReq.getPageNum() - 1) * spuInfoReq.getPageSize());
+            spuInfoReq.setRows(spuInfoReq.getPageSize());
+        }
+        List<SpuInfo> list = spuInfoMapper.searchListByWhere(spuInfoReq);
+        for (SpuInfo item : list) {
+
+        }
+        return list;
+    }
+
+    @Override
+    public Integer searchSkuCountByWhere(SearchSkuInfoReq spuInfoReq) {
+        Integer count = skuInfoMapper.searchCountByWhere(spuInfoReq);
+        return count;
+    }
+
+    @Override
+    public List<SkuInfo> searchSkuListByWhere(SearchSkuInfoReq spuInfoReq) {
+        if (spuInfoReq.getPageNum() != null && spuInfoReq.getPageSize() != null) {
+            spuInfoReq.setStart((spuInfoReq.getPageNum() - 1) * spuInfoReq.getPageSize());
+            spuInfoReq.setRows(spuInfoReq.getPageSize());
+        }
+        List<SkuInfo> list = skuInfoMapper.searchListByWhere(spuInfoReq);
+        for (SkuInfo item : list) {
+
+        }
+        return list;
     }
 }

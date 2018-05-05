@@ -21,21 +21,10 @@
         <legend>筛选</legend>
         <table class="tableForm">
             <tr>
-                <th>商品SKU：</th>
+                <th>SPU名称：</th>
                 <th>
-                    <input id="goodsSku" name="goodsSku" class="easyui-textbox" style="width:200px;height:32px">
+                    <input id="spuName" name="spuName" class="easyui-textbox" style="width:200px;height:32px">
                 </th>
-                <th>商品编号：</th>
-                <th>
-                    <input id="goodsCode" name="goodsCode" class="easyui-textbox" style="width:200px;height:32px">
-                </th>
-                <th>商品名称：</th>
-                <td>
-                    <input id="goodsName" name="goodsName" class="easyui-textbox" style="width:200px;height:32px">
-                </td>
-                <td>
-                    <a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchFun();" href="javascript:void(0);">查找</a>
-                </td>
             </tr>
             <tr>
 
@@ -56,7 +45,7 @@
 <script type="text/javascript">
     $(function(){
         datagrid = $('#datagrid').datagrid({
-            url : contextPath + '/page/goods/searchOrder',
+            url : contextPath + '/page/goods/searchSkuList',
             queryParams: {
                 orderYear:2017
             },
@@ -82,18 +71,18 @@
                     return rowIndex+1;
                 }
             } ,{
-                title : '商品SKU',
-                field : 'goodsSku',
+                title : 'SKU名称',
+                field : 'skuName',
                 width : 40,
 
             } ,{
-                title : '商品编号',
-                field : 'goodsCode',
+                title : 'SKU标示',
+                field : 'skuName',
                 width : 40,
 
             } ,{
-                title : '商品名称',
-                field : 'goodsName',
+                title : 'SPU名称',
+                field : 'spuName',
                 width : 40,
 
             },{

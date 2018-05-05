@@ -1,7 +1,11 @@
 package com.chengzg.oms.service;
 
 import com.chengzg.oms.entity.GoodsInfo;
+import com.chengzg.oms.entity.SkuInfo;
+import com.chengzg.oms.entity.SpuInfo;
 import com.chengzg.oms.model.req.SearchGoodsInfoReq;
+import com.chengzg.oms.model.req.SearchSkuInfoReq;
+import com.chengzg.oms.model.req.SearchSpuInfoReq;
 
 import java.util.List;
 
@@ -20,5 +24,14 @@ public interface GoodsInfoService {
     GoodsInfo getGoodsInfoByCode(String goodsSku);
 
     GoodsInfo getGoodsInfo(String sku);
+
+
+    Integer searchSpuCountByWhere(SearchSpuInfoReq spuInfoReq);
+
+    List<SpuInfo> searchSpuListByWhere(SearchSpuInfoReq spuInfoReq);
+
+    Integer searchSkuCountByWhere(SearchSkuInfoReq spuInfoReq);
+
+    List<SkuInfo> searchSkuListByWhere(SearchSkuInfoReq spuInfoReq);
 
 }

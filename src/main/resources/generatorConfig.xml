@@ -68,7 +68,13 @@
         </javaClientGenerator>
 
 
-        <table tableName="tb_order_report" domainObjectName="OrderReport"
+        <table tableName="tb_sku_info" domainObjectName="SkuInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <table tableName="tb_spu_info" domainObjectName="SpuInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

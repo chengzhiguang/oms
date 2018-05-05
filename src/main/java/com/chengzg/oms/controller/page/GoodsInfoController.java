@@ -6,9 +6,13 @@ import com.chengzg.oms.controller.support.PageResponse;
 import com.chengzg.oms.controller.support.ReturnResult;
 import com.chengzg.oms.entity.GoodsInfo;
 import com.chengzg.oms.entity.OrderInfo;
+import com.chengzg.oms.entity.SkuInfo;
+import com.chengzg.oms.entity.SpuInfo;
 import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.model.req.SearchGoodsInfoReq;
 import com.chengzg.oms.model.req.SearchOrderInfoReq;
+import com.chengzg.oms.model.req.SearchSkuInfoReq;
+import com.chengzg.oms.model.req.SearchSpuInfoReq;
 import com.chengzg.oms.service.GoodsInfoService;
 import com.chengzg.oms.service.OrderInfoService;
 import com.chengzg.oms.utils.Asserts;
@@ -26,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,11 +44,11 @@ public class GoodsInfoController extends BaseController {
     @Autowired
     private GoodsInfoService goodsInfoService;
 
-    @RequestMapping(value="toGoodsManagerPage",method={RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="toSpuManagerPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
     ModelAndView toGoodsManagerPage(HttpServletRequest request, HttpServletResponse response) {
         try {
-            return new ModelAndView("goods/GoodsManagerPage");
+            return new ModelAndView("goods/SpuManagerPage");
         } catch (ServiceException e) {
             logger.error("toGoodsManagerPage CommonException异常", e);
             int code =((ServiceException) e).getCode();
@@ -54,30 +59,59 @@ public class GoodsInfoController extends BaseController {
         }
     }
 
+    @RequestMapping(value="toSkuManagerPage",method={RequestMethod.GET, RequestMethod.POST})
+    public @ResponseBody
+    ModelAndView toSkuManagerPage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            return new ModelAndView("goods/SkuManagerPage");
+        } catch (ServiceException e) {
+            logger.error("toGoodsManagerPage CommonException异常", e);
+            int code =((ServiceException) e).getCode();
+            return new ModelAndView("404");
+        } catch (Exception e) {
+            logger.error("toGoodsManagerPage Exception异常", e);
+            return new ModelAndView("404");
+        }
+    }
 
     @ResponseBody
-    @RequestMapping(value = "/searchOrder")
-    public PageResponse searchOrder(HttpServletRequest request, HttpServletResponse response) {
-
-        logger.info(" importOrderInfo start  !");
-        String goodsSku = HttpUtil.getParameter(request, "goodsSku", null);
-
-        String goodsCode = HttpUtil.getParameter(request, "goodsCode", null);
-        String goodsName = HttpUtil.getParameter(request, "goodsName", null);
+    @RequestMapping(value = "/searchSkuList")
+    public PageResponse searchSkuList(HttpServletRequest request, HttpServletResponse response) {
         Integer pageNum = HttpUtil.getIntegerParameter(request, "page", 1);
         Integer pageSize = HttpUtil.getIntegerParameter(request, "rows", 10);
 
-        String orderCode = HttpUtil.getParameter(request, "orderCode", null);
-        SearchGoodsInfoReq where = SearchGoodsInfoReq.builder()
-                .goodsCode(goodsCode)
-                .goodsSku(goodsSku)
-                .goodsName(goodsName)
+        String skuName = HttpUtil.getParameter(request, "skuName", null);
+
+        SearchSkuInfoReq where = SearchSkuInfoReq.builder()
+                .skuName(skuName)
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
 
-        Integer total = goodsInfoService.searchCountByWhere(where);
-        List<GoodsInfo> list = goodsInfoService.searchListByWhere(where);
+        Integer total = goodsInfoService.searchSkuCountByWhere(where);
+        List<SkuInfo> list = goodsInfoService.searchSkuListByWhere(where);
+
+        return this.successPageReturn(pageNum + 1, total, list);
+
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/searchSpuList")
+    public PageResponse searchSpuList(HttpServletRequest request, HttpServletResponse response) {
+        Integer pageNum = HttpUtil.getIntegerParameter(request, "page", 1);
+        Integer pageSize = HttpUtil.getIntegerParameter(request, "rows", 10);
+
+        String spuName = HttpUtil.getParameter(request, "spuName", null);
+
+        SearchSpuInfoReq where = SearchSpuInfoReq.builder()
+                .spuName(spuName)
+                .pageNum(pageNum)
+                .pageSize(pageSize)
+                .build();
+
+        Integer total = goodsInfoService.searchSpuCountByWhere(where);
+        List<SpuInfo> list = goodsInfoService.searchSpuListByWhere(where);
 
         return this.successPageReturn(pageNum + 1, total, list);
     }

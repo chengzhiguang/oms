@@ -18,7 +18,10 @@
                     <span>订单查询</span>
                 </li>
 				<li>
-					<span>商品维护</span>
+					<span>商品SPU维护</span>
+				</li>
+				<li>
+					<span>商品SKU维护</span>
 				</li>
 				<li>
 					<span>报表生成</span>

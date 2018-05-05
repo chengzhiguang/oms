@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengzg.oms.mapper.SkuInfoMapper">
+  <resultMap id="BaseResultMap" type="com.chengzg.oms.entity.SkuInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="sku_code" jdbcType="VARCHAR" property="skuCode" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="spu_code" jdbcType="VARCHAR" property="spuCode" />
+    <result column="spu_name" jdbcType="VARCHAR" property="spuName" />
+    <result column="sku_weight" jdbcType="INTEGER" property="skuWeight" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sku_code, sku_name, spu_code, spu_name, sku_weight, is_del, create_time, last_modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sku_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_sku_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chengzg.oms.entity.SkuInfo">
+    insert into tb_sku_info (id, sku_code, sku_name, 
+      spu_code, spu_name, sku_weight, 
+      is_del, create_time, last_modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{skuCode,jdbcType=VARCHAR}, #{skuName,jdbcType=VARCHAR}, 
+      #{spuCode,jdbcType=VARCHAR}, #{spuName,jdbcType=VARCHAR}, #{skuWeight,jdbcType=INTEGER}, 
+      #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengzg.oms.entity.SkuInfo">
+    insert into tb_sku_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="skuCode != null">
+        sku_code,
+      </if>
+      <if test="skuName != null">
+        sku_name,
+      </if>
+      <if test="spuCode != null">
+        spu_code,
+      </if>
+      <if test="spuName != null">
+        spu_name,
+      </if>
+      <if test="skuWeight != null">
+        sku_weight,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="skuCode != null">
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuName != null">
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="spuCode != null">
+        #{spuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spuName != null">
+        #{spuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuWeight != null">
+        #{skuWeight,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.SkuInfo">
+    update tb_sku_info
+    <set>
+      <if test="skuCode != null">
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuName != null">
+        sku_name = #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="spuCode != null">
+        spu_code = #{spuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spuName != null">
+        spu_name = #{spuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuWeight != null">
+        sku_weight = #{skuWeight,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengzg.oms.entity.SkuInfo">
+    update tb_sku_info
+    set sku_code = #{skuCode,jdbcType=VARCHAR},
+      sku_name = #{skuName,jdbcType=VARCHAR},
+      spu_code = #{spuCode,jdbcType=VARCHAR},
+      spu_name = #{spuName,jdbcType=VARCHAR},
+      sku_weight = #{skuWeight,jdbcType=INTEGER},
+      is_del = #{isDel,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <sql id="whereSql">
+    <where>
+      AND is_del = 0
+      <if test="skuName != null and skuName != ''">
+        sku_name = #{skuName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="limitSql">
+    <if test="start != null and rows != null">
+      LIMIT #{start}, #{rows}
+    </if>
+  </sql>
+
+
+  <select id="searchListByWhere" parameterType="com.chengzg.oms.model.req.SearchSkuInfoReq" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_sku_info
+    <include refid="whereSql"/>
+    order by id DESC
+    <include refid="limitSql"/>
+  </select>
+
+  <select id="searchCountByWhere" parameterType="com.chengzg.oms.model.req.SearchSkuInfoReq" resultType="java.lang.Integer">
+    select
+    COUNT(id)
+    from tb_sku_info
+    <include refid="whereSql"/>
+  </select>
+</mapper>

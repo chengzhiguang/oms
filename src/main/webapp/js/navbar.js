@@ -7,8 +7,10 @@ function getUrl(noteText) {
 		url = contextPath + '/page/order/toOrderManagerPage';
 	} else if(noteText == '报表生成') {
         url = contextPath + '/page/orderreport/toOrderReportPage';
-    } else if(noteText == '商品维护') {
-        url = contextPath + '/page/goods/toGoodsManagerPage';
+    } else if(noteText == '商品SPU维护') {
+        url = contextPath + '/page/goods/toSpuManagerPage';
+    } else if(noteText == '商品SKU维护') {
+        url = contextPath + '/page/goods/toSkuManagerPage';
     } else if(noteText == '报表查看') {
         url = contextPath + '/page/orderreport/toReportPage';
     }
