@@ -14,6 +14,8 @@ import lombok.*;
 public class SearchSpuInfoReq {
     private String spuName;
 
+    private String spuCode;
+
     private Integer pageNum;
 
     private Integer pageSize;

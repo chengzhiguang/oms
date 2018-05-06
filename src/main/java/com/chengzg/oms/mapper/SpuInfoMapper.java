@@ -1,8 +1,6 @@
 package com.chengzg.oms.mapper;
 
-import com.chengzg.oms.entity.GoodsInfo;
 import com.chengzg.oms.entity.SpuInfo;
-import com.chengzg.oms.model.req.SearchGoodsInfoReq;
 import com.chengzg.oms.model.req.SearchSpuInfoReq;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +23,5 @@ public interface SpuInfoMapper {
     Integer searchCountByWhere(SearchSpuInfoReq orderInfo);
 
     List<SpuInfo> searchListByWhere(SearchSpuInfoReq orderInfo);
+
 }

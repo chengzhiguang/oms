@@ -14,6 +14,8 @@ import lombok.*;
 public class SearchSkuInfoReq {
     private String skuName;
 
+    private String skuCode;
+
     private Integer pageNum;
 
     private Integer pageSize;

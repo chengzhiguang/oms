@@ -25,6 +25,4 @@ public class SkuInfo {
     private Integer isDel;
 
     private Date createTime;
-
-    private Date lastModifyTime;
 }

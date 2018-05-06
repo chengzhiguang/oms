@@ -10,25 +10,25 @@
 	<input id="hiddenName" type="hidden" value="${name }" />
 	<div class="easyui-accordion" fit="true"id="navDiv"  data-options="fit:true,border:false">
 		<div class="easyui-panel" id="divWorkSurface" data-options="fit:true,border:false"  title="京东订单" style="padding:10px;">
-			<ul id="WorkSurfaceTree">  
-                <li>  
-                    <span>订单导入</span>
-                </li> 
-                <li>  
-                    <span>订单查询</span>
-                </li>
+			<ul id="WorkSurfaceTree">
 				<li>
 					<span>商品SPU维护</span>
 				</li>
 				<li>
 					<span>商品SKU维护</span>
 				</li>
+                <%--<li>
+                    <span>订单导入</span>
+                </li> 
+                <li>  
+                    <span>订单查询</span>
+                </li>
 				<li>
 					<span>报表生成</span>
 				</li>
 				<li>
 					<span>报表查看</span>
-				</li>
+				</li>--%>
             </ul>  
 		</div>
 		<%--<div class="easyui-panel" id="divGoodsInfo" data-options="fit:true,border:false"  title="商品信息" style="padding:10px;">

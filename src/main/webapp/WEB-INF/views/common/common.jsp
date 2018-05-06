@@ -23,4 +23,22 @@
 <c:set var="imgbasepath" value="${path}/img/" scope="session"/>
 <script type="text/javascript">
 	var contextPath = '<%=path%>';
+
+	function checknum(obj){
+
+
+		$(obj).val($(obj).val().replace(/[^-0-9.]/g,''));
+		$(obj).val($(obj).val().replace('..','.')); //需要优化,如果按着.点键不放开,是有bug的
+		var pay_val = obj.value;
+		if(pay_val.indexOf(".")>=0) {
+			var _pay = pay_val.split(".")[1];
+			var _pay_len = _pay.length;
+
+			if (_pay_len > 2) {
+				obj.value = pay_val.substring(0, pay_val.length-1);
+			} else {
+				obj.value = pay_val;
+			}
+		}
+	}
 </script>

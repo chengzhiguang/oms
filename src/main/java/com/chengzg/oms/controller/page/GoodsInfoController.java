@@ -30,8 +30,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by czg on 2016-08-26.
@@ -117,69 +119,112 @@ public class GoodsInfoController extends BaseController {
     }
 
 
-    @RequestMapping(value="toAddGoodsInfoPage",method={RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="toAddSpuInfoPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
-    ModelAndView toAddGoodsInfoPage(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView toAddSpuInfoPage(HttpServletRequest request, HttpServletResponse response) {
         try {
-            return new ModelAndView("goods/AddGoodsInfoPage");
+            String spuCode = UUID.randomUUID().toString().replace("-", "");
+            request.setAttribute("spuCode", spuCode);
+            return new ModelAndView("goods/AddSpuInfoPage");
         } catch (ServiceException e) {
-            logger.error("toAddGoodsInfoPage CommonException异常", e);
+            logger.error("toAddSpuInfoPage CommonException异常", e);
             int code =((ServiceException) e).getCode();
             return new ModelAndView("404");
         } catch (Exception e) {
-            logger.error("toAddGoodsInfoPage Exception异常", e);
+            logger.error("toAddSpuInfoPage Exception异常", e);
+            return new ModelAndView("404");
+        }
+    }
+
+    @RequestMapping(value="toAddSkuInfoPage",method={RequestMethod.GET, RequestMethod.POST})
+    public @ResponseBody
+    ModelAndView toAddSkuInfoPage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+
+
+            SearchSpuInfoReq where = SearchSpuInfoReq.builder()
+                    .build();
+
+            List<SpuInfo> spuList = goodsInfoService.searchSpuListByWhere(where);
+
+            request.setAttribute("spuList", spuList);
+            return new ModelAndView("goods/AddSkuInfoPage");
+        } catch (ServiceException e) {
+            logger.error("toAddSkuInfoPage CommonException异常", e);
+            int code =((ServiceException) e).getCode();
+            return new ModelAndView("404");
+        } catch (Exception e) {
+            logger.error("toAddSkuInfoPage Exception异常", e);
             return new ModelAndView("404");
         }
     }
 
     @ResponseBody
-    @RequestMapping(value = "/saveGoodsInfo")
-    public ReturnResult saveGoodsInfo(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/saveSpuInfo")
+    public ReturnResult saveSpuInfo(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info(" saveGoodsInfo start  !");
-        String goodsCode = HttpUtil.getParameter(request, "goodsCode", null);
-        String goodsSku = HttpUtil.getParameter(request, "goodsSku", null);
-        String goodsName = HttpUtil.getParameter(request, "goodsName", null);
-        Integer jdPrice = HttpUtil.getIntegerParameter(request, "jdPrice", null);
-        Integer marketPrice = HttpUtil.getIntegerParameter(request, "marketPrice", null);
-        Integer goodsWeight = HttpUtil.getIntegerParameter(request, "goodsWeight", null);
-        Integer discount = HttpUtil.getIntegerParameter(request, "discount", null);
-        Integer marketingCosts = HttpUtil.getIntegerParameter(request, "marketingCosts", null);
+        String spuCode = HttpUtil.getParameter(request, "spuCode", null);
+        String spuName = HttpUtil.getParameter(request, "spuName", null);
+        BigDecimal spuCost = HttpUtil.getBigDecimal(request, "spuCost");
 
-        GoodsInfo goodsInfo = GoodsInfo
+        SpuInfo goodsInfo = SpuInfo
                 .builder()
-                .goodsCode(goodsCode)
-                .goodsSku(goodsSku)
-                .goodsName(goodsName)
-                .jdPrice(jdPrice)
-                .marketPrice(marketPrice)
-                .goodsWeight(goodsWeight)
-                .discount(discount)
-                .marketingCosts(marketingCosts)
+                .spuCode(spuCode)
+                .spuName(spuName)
+                .spuCost(spuCost)
                 .build();
 
-        goodsInfoService.saveGoodsInfo(goodsInfo);
+        goodsInfoService.saveSpuInfo(goodsInfo);
         return this.successReturn(null);
     }
 
-    @RequestMapping(value="toMofyGoodsInfoPage",method={RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="toMofySpuInfoPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
-    ModelAndView toMofyGoodsInfoPage(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView toMofySpuInfoPage(HttpServletRequest request, HttpServletResponse response) {
         try {
-            String goodsSku = HttpUtil.getParameter(request, "goodsSku", null);
-            Asserts.checkNullOrEmpty(goodsSku, "商品编号不能为空");
+            String spuCode = HttpUtil.getParameter(request, "spuCode", null);
+            Asserts.checkNullOrEmpty(spuCode, "商品编号不能为空");
 
-            GoodsInfo goodsInfo = goodsInfoService.getGoodsInfoByCode(goodsSku);
-            Asserts.checkNullOrEmpty(goodsInfo, "商品为空");
-            request.setAttribute("goodsInfo", goodsInfo);
+            SpuInfo spuInfo = goodsInfoService.getSpuInfoByCode(spuCode);
+            Asserts.checkNullOrEmpty(spuInfo, "商品spu为空");
+            request.setAttribute("spuInfo", spuInfo);
 
-            return new ModelAndView("goods/MofyGoodsInfoPage");
+            return new ModelAndView("goods/MofySpuInfoPage");
         } catch (ServiceException e) {
-            logger.error("toMofyGoodsInfoPage CommonException异常", e);
+            logger.error("toMofySpuInfoPage CommonException异常", e);
             int code =((ServiceException) e).getCode();
             return new ModelAndView("404");
         } catch (Exception e) {
-            logger.error("toMofyGoodsInfoPage Exception异常", e);
+            logger.error("toMofySpuInfoPage Exception异常", e);
+            return new ModelAndView("404");
+        }
+    }
+
+    @RequestMapping(value="toMofySkuInfoPage",method={RequestMethod.GET, RequestMethod.POST})
+    public @ResponseBody
+    ModelAndView toMofySkuInfoPage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String skuCode = HttpUtil.getParameter(request, "skuCode", null);
+            Asserts.checkNullOrEmpty(skuCode, "商品编号不能为空");
+
+            SkuInfo skuInfo = goodsInfoService.getSkuInfoByCode(skuCode);
+            Asserts.checkNullOrEmpty(skuInfo, "商品sku为空");
+            request.setAttribute("skuInfo", skuInfo);
+
+            SearchSpuInfoReq where = SearchSpuInfoReq.builder()
+                    .build();
+            List<SpuInfo> spuList = goodsInfoService.searchSpuListByWhere(where);
+
+            request.setAttribute("spuList", spuList);
+
+            return new ModelAndView("goods/MofySkuInfoPage");
+        } catch (ServiceException e) {
+            logger.error("toMofySpuInfoPage CommonException异常", e);
+            int code =((ServiceException) e).getCode();
+            return new ModelAndView("404");
+        } catch (Exception e) {
+            logger.error("toMofySpuInfoPage Exception异常", e);
             return new ModelAndView("404");
         }
     }

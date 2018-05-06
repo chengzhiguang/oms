@@ -60,19 +60,19 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     private static String allGoodsKey = "allGoodsKey";
 
     @Override
-    public Integer saveGoodsInfo(GoodsInfo goodsInfo) {
-        String goodsCode = goodsInfo.getGoodsCode();
-        GoodsInfo check = getGoodsInfoByCode(goodsCode);
+    public Integer saveSpuInfo(SpuInfo spuInfo) {
+        String spuCode = spuInfo.getSpuCode();
+        SpuInfo check = getSpuInfoByCode(spuCode);
         Integer result = 0;
         if (check == null) {
-            goodsInfo.setIsDel(0);
-            goodsInfo.setCreateTime(new Date());
-            result = goodsInfoMapper.insertSelective(goodsInfo);
+            spuInfo.setIsDel(0);
+            spuInfo.setCreateTime(new Date());
+            result = spuInfoMapper.insertSelective(spuInfo);
         } else {
-            goodsInfo.setIsDel(0);
-            goodsInfo.setId(check.getId());
-            goodsInfo.setCreateTime(null);
-            result = goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
+            spuInfo.setIsDel(0);
+            spuInfo.setId(check.getId());
+            spuInfo.setCreateTime(null);
+            result = spuInfoMapper.updateByPrimaryKeySelective(spuInfo);
         }
         return result;
     }
@@ -103,17 +103,27 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public GoodsInfo getGoodsInfoByCode(String goodsSku) {
-        SearchGoodsInfoReq where = SearchGoodsInfoReq
+    public SpuInfo getSpuInfoByCode(String spuCode) {
+        SearchSpuInfoReq where = SearchSpuInfoReq
                 .builder()
-                .goodsSku(goodsSku)
+                .spuCode(spuCode)
                 .build();
-        List<GoodsInfo> goodsInfoList = goodsInfoMapper.searchListByWhere(where);
+        List<SpuInfo> goodsInfoList = spuInfoMapper.searchListByWhere(where);
         if (goodsInfoList == null || goodsInfoList.size() <= 0) {
             return  null;
         }
 
         return goodsInfoList.get(0);
+    }
+
+    @Override
+    public SkuInfo getSkuInfoByCode(String skuCode) {
+        SearchSkuInfoReq where = SearchSkuInfoReq.builder().skuCode(skuCode).build();
+        List<SkuInfo> skuList = skuInfoMapper.searchListByWhere(where);
+        if (skuList == null || skuList.size() <= 0) {
+            return null;
+        }
+        return skuList.get(0);
     }
 
     @Override

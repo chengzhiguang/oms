@@ -5,13 +5,12 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="spu_code" jdbcType="VARCHAR" property="spuCode" />
     <result column="spu_name" jdbcType="VARCHAR" property="spuName" />
-    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="spu_cost" jdbcType="DECIMAL" property="spuCost" />
     <result column="is_del" jdbcType="INTEGER" property="isDel" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, spu_code, spu_name, cost, is_del, create_time, last_modify_time
+    id, spu_code, spu_name, spu_cost, is_del, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -25,11 +24,11 @@
   </delete>
   <insert id="insert" parameterType="com.chengzg.oms.entity.SpuInfo">
     insert into tb_spu_info (id, spu_code, spu_name, 
-      cost, is_del, create_time, 
-      last_modify_time)
+      spu_cost, is_del, create_time
+      )
     values (#{id,jdbcType=BIGINT}, #{spuCode,jdbcType=VARCHAR}, #{spuName,jdbcType=VARCHAR}, 
-      #{cost,jdbcType=DECIMAL}, #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{lastModifyTime,jdbcType=TIMESTAMP})
+      #{spuCost,jdbcType=DECIMAL}, #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chengzg.oms.entity.SpuInfo">
     insert into tb_spu_info
@@ -43,17 +42,14 @@
       <if test="spuName != null">
         spu_name,
       </if>
-      <if test="cost != null">
-        cost,
+      <if test="spuCost != null">
+        spu_cost,
       </if>
       <if test="isDel != null">
         is_del,
       </if>
       <if test="createTime != null">
         create_time,
-      </if>
-      <if test="lastModifyTime != null">
-        last_modify_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -66,17 +62,14 @@
       <if test="spuName != null">
         #{spuName,jdbcType=VARCHAR},
       </if>
-      <if test="cost != null">
-        #{cost,jdbcType=DECIMAL},
+      <if test="spuCost != null">
+        #{spuCost,jdbcType=DECIMAL},
       </if>
       <if test="isDel != null">
         #{isDel,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastModifyTime != null">
-        #{lastModifyTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -89,17 +82,14 @@
       <if test="spuName != null">
         spu_name = #{spuName,jdbcType=VARCHAR},
       </if>
-      <if test="cost != null">
-        cost = #{cost,jdbcType=DECIMAL},
+      <if test="spuCost != null">
+        spu_cost = #{spuCost,jdbcType=DECIMAL},
       </if>
       <if test="isDel != null">
         is_del = #{isDel,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastModifyTime != null">
-        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -108,19 +98,23 @@
     update tb_spu_info
     set spu_code = #{spuCode,jdbcType=VARCHAR},
       spu_name = #{spuName,jdbcType=VARCHAR},
-      cost = #{cost,jdbcType=DECIMAL},
+      spu_cost = #{spuCost,jdbcType=DECIMAL},
       is_del = #{isDel,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
 
   <sql id="whereSql">
     <where>
       AND is_del = 0
       <if test="spuName != null and spuName != ''">
-        spu_name = #{spuName,jdbcType=VARCHAR}
+        AND spu_name = #{spuName,jdbcType=VARCHAR}
       </if>
+      <if test="spuCode != null and spuCode != ''">
+        AND spu_code = #{spuCode,jdbcType=VARCHAR}
+      </if>
+
     </where>
   </sql>
 

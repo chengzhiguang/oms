@@ -10,10 +10,9 @@
     <result column="sku_weight" jdbcType="INTEGER" property="skuWeight" />
     <result column="is_del" jdbcType="INTEGER" property="isDel" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, sku_code, sku_name, spu_code, spu_name, sku_weight, is_del, create_time, last_modify_time
+    id, sku_code, sku_name, spu_code, spu_name, sku_weight, is_del, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -28,12 +27,10 @@
   <insert id="insert" parameterType="com.chengzg.oms.entity.SkuInfo">
     insert into tb_sku_info (id, sku_code, sku_name, 
       spu_code, spu_name, sku_weight, 
-      is_del, create_time, last_modify_time
-      )
+      is_del, create_time)
     values (#{id,jdbcType=BIGINT}, #{skuCode,jdbcType=VARCHAR}, #{skuName,jdbcType=VARCHAR}, 
       #{spuCode,jdbcType=VARCHAR}, #{spuName,jdbcType=VARCHAR}, #{skuWeight,jdbcType=INTEGER}, 
-      #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}
-      )
+      #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.chengzg.oms.entity.SkuInfo">
     insert into tb_sku_info
@@ -62,9 +59,6 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="lastModifyTime != null">
-        last_modify_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -90,9 +84,6 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastModifyTime != null">
-        #{lastModifyTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -120,9 +111,6 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="lastModifyTime != null">
-        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -134,16 +122,19 @@
       spu_name = #{spuName,jdbcType=VARCHAR},
       sku_weight = #{skuWeight,jdbcType=INTEGER},
       is_del = #{isDel,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
 
   <sql id="whereSql">
     <where>
       AND is_del = 0
       <if test="skuName != null and skuName != ''">
-        sku_name = #{skuName,jdbcType=VARCHAR}
+        AND sku_name = #{skuName,jdbcType=VARCHAR}
+      </if>
+      <if test="skuCode != null and skuCode != ''">
+        AND sku_code = #{skuCode,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>

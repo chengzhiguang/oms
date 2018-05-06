@@ -13,7 +13,7 @@ import java.util.List;
  * Created by chengzg3 on 2017/12/25.
  */
 public interface GoodsInfoService {
-    Integer saveGoodsInfo(GoodsInfo goodsInfo);
+    Integer saveSpuInfo(SpuInfo spuInfo);
 
     Integer mofyGoodsInfoByCode(GoodsInfo goodsInfo);
 
@@ -21,7 +21,10 @@ public interface GoodsInfoService {
 
     List<GoodsInfo> searchListByWhere(SearchGoodsInfoReq orderInfo);
 
-    GoodsInfo getGoodsInfoByCode(String goodsSku);
+    SpuInfo getSpuInfoByCode(String spuCode);
+
+    SkuInfo getSkuInfoByCode(String skuCode);
+
 
     GoodsInfo getGoodsInfo(String sku);
 

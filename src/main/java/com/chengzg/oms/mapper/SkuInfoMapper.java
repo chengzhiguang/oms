@@ -1,9 +1,7 @@
 package com.chengzg.oms.mapper;
 
 import com.chengzg.oms.entity.SkuInfo;
-import com.chengzg.oms.entity.SpuInfo;
 import com.chengzg.oms.model.req.SearchSkuInfoReq;
-import com.chengzg.oms.model.req.SearchSpuInfoReq;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,8 +20,9 @@ public interface SkuInfoMapper {
 
     int updateByPrimaryKey(SkuInfo record);
 
-
     Integer searchCountByWhere(SearchSkuInfoReq orderInfo);
 
     List<SkuInfo> searchListByWhere(SearchSkuInfoReq orderInfo);
+
+
 }

@@ -1,7 +1,11 @@
 package com.chengzg.oms.controller.page;
 
+import com.alibaba.fastjson.JSONArray;
 import com.chengzg.oms.controller.support.BaseController;
+import com.chengzg.oms.controller.support.ReturnResult;
 import com.chengzg.oms.exception.ServiceException;
+import com.chengzg.oms.utils.ExcelUtil;
+import com.chengzg.oms.utils.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
 /**
  * Created by chengzg3 on 2018/5/5.
@@ -34,5 +39,22 @@ public class JdDataController extends BaseController {
             logger.error("getSysTime Exception异常", e);
             return new ModelAndView("404");
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/importJdSkuData")
+    public ReturnResult importJdSkuData(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info(" importJdSkuData start  !");
+
+        File excelFile = HttpUtil.getFileByRequest(request);
+        if (excelFile == null) {
+            return this.errorReturn(100);
+        }
+
+        JSONArray excelList = ExcelUtil.importCsv(excelFile);
+        logger.info("" + excelList.size());
+
+        return this.successReturn(null);
     }
 }

@@ -94,7 +94,7 @@
                 width : 80,
                 formatter : function(value, rowData, rowIndex) {
 //			    return '<a href="' + contextPath + '/manager/userManagerController/toUserDetailsPage?uid=' + rowData.uid + '">查看</a>';
-                    var mark = '<span style="font-family:\'STHeitiSC-Light\', \'Heiti SC Light\', \'Heiti SC\';font-weight:200;color:#0099FF;" onclick="javascript:toModifyPage(\'' + rowData.goodsSku + '\');">修改</span>';
+                    var mark = '<span style="font-family:\'STHeitiSC-Light\', \'Heiti SC Light\', \'Heiti SC\';font-weight:200;color:#0099FF;" onclick="javascript:toModifyPage(\'' + rowData.spuCode + '\');">修改</span>';
                     return mark;
                 }
             }] ],
@@ -125,11 +125,11 @@
     }
 
     function toAddAuthPage() {
-        showMyWindow("添加商品信息", contextPath + "/page/goods/toAddGoodsInfoPage", 600, 500);
+        showMyWindow("添加商品SPU信息", contextPath + "/page/goods/toAddSpuInfoPage", 600, 500);
     }
 
-    function toModifyPage(goodsSku) {
-        showMyWindow("修改商品信息", contextPath + "/page/goods/toMofyGoodsInfoPage?goodsSku="+goodsSku, 600, 500);
+    function toModifyPage(spuCode) {
+        showMyWindow("修改商品SPU信息", contextPath + "/page/goods/toMofySpuInfoPage?spuCode="+spuCode, 600, 500);
     }
 
 </script>

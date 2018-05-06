@@ -17,11 +17,9 @@ public class SpuInfo {
 
     private String spuName;
 
-    private BigDecimal cost;
+    private BigDecimal spuCost;
 
     private Integer isDel;
 
     private Date createTime;
-
-    private Date lastModifyTime;
 }
