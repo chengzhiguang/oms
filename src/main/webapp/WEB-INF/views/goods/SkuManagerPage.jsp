@@ -23,11 +23,14 @@
             <tr>
                 <th>SPU名称：</th>
                 <th>
-                    <input id="spuName" name="spuName" class="easyui-textbox" style="width:200px;height:32px">
+                    <input id="skuName" name="skuName" class="easyui-textbox" style="width:200px;height:32px">
                 </th>
             </tr>
             <tr>
-
+                <th>
+                    <br>
+                    <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="searchFun();" href="javascript:void(0);">搜索</a>
+                </th>
                 <th>
                     <br>
                     <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="toAddAuthPage();" href="javascript:void(0);">新增物品</a>
@@ -71,57 +74,23 @@
                     return rowIndex+1;
                 }
             } ,{
-                title : 'SKU名称',
+                title : 'sku标识',
+                field : 'skuCode',
+                width : 40,
+
+            } ,{
+                title : 'sku名称',
                 field : 'skuName',
                 width : 40,
 
             } ,{
-                title : 'SKU标示',
-                field : 'skuName',
-                width : 40,
-
-            } ,{
-                title : 'SPU名称',
+                title : 'spu名称',
                 field : 'spuName',
                 width : 40,
 
-            },{
-                title : '年营销成本',
-                field : 'marketingCosts',
-                width : 40,
-                formatter : function(value, rowData, rowIndex) {
-                    var date = rowData.marketingCosts;
-                    var show = "";
-                    if (date == undefined || date <= 0) {
-                        show = "<font color=\"red\">0</font>";
-                    } else {
-                        show = "<font color=\"green\">"+date/100+"</font>";
-                    }
-                    return show;
-                }
-            },{
-                title : '京东价',
-                field : 'jdPrice',
-                width : 40,
-                formatter : function(value, rowData, rowIndex) {
-                    var date = rowData.jdPrice;
-                    return date/100;
-                }
-            }, {
-                title : '市场价',
-                field : 'marketPrice',
-                width : 40,
-                formatter : function(value, rowData, rowIndex) {
-                    var date = rowData.marketPrice;
-                    return date/100;
-                }
-            }, {
-                title : '折扣(%)',
-                field : 'discount',
-                width : 40,
             }, {
                 title : '商品毛重（单位g）',
-                field : 'goodsWeight',
+                field : 'skuWeight',
                 width : 40,
             } , {
                 title : '操作',
@@ -155,9 +124,7 @@
 
     function searchFun() {
         datagrid.datagrid('load', {
-            goodsCode : $('input[name=goodsCode]').val(),
-            goodsSku : $('input[name=goodsSku]').val(),
-            goodsName : $('input[name=goodsName]').val(),
+            skuName : $('input[name=skuName]').val(),
         });
     }
 

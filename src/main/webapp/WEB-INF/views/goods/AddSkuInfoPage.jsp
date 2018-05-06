@@ -21,16 +21,26 @@
 
     <table class="tableForm"  cellspacing="8">
         <tr  align="right">
-            <th>SPU编号：</th>
-            <td><input id="spuCode" name="spuCode" class="easyui-textbox" style="width:200px;height:30px" value="${spuCode}" readonly="readonly"></td>
+            <th>商品spu：</th>
+            <td>
+                <select id="spuCode" name="spuCode" class="easyui-combobox" style="width:120px;height:30px">
+                    <c:forEach items="${spuList}" var="item">
+                        <option  value="${item.spuCode }">${item.spuName}</option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr  align="right">
-            <th>商品SPU名称：</th>
-            <td><input id="spuName" name="spuName" class="easyui-textbox" style="width:200px;height:30px" value=""></td>
+            <th>商品SKUID：</th>
+            <td><input id="skuCode" name="skuCode" class="easyui-textbox" style="width:200px;height:30px" value=""></td>
         </tr>
         <tr  align="right">
-            <th>成本价（斤）：</th>
-            <td><input id="spuCost" name="spuCost" style="width:200px;height:30px" value="" onkeyup="javascript:checknum(this);"></td>
+            <th>商品SKU名称：</th>
+            <td><input id="skuName" name="skuName" class="easyui-textbox" style="width:200px;height:30px" value=""></td>
+        </tr>
+        <tr  align="right">
+            <th>规格（克）：</th>
+            <td><input id="skuWeight" name="skuWeight" style="width:200px;height:30px" value="" onkeyup="javascript:checknum(this);"></td>
         </tr>
         <tr>
             <th></th>
