@@ -26,11 +26,11 @@ import java.io.File;
 public class JdDataController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(JdDataController.class);
 
-    @RequestMapping(value="toImportJdSkuDataPage",method={RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="toDailyManagerPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
-    ModelAndView toImportJdSkuDataPage(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView toDailyManagerPage(HttpServletRequest request, HttpServletResponse response) {
         try {
-            return new ModelAndView("jddata/ImportJdSkuDataPag");
+            return new ModelAndView("jddata/DailyManagerPage");
         } catch (ServiceException e) {
             logger.error("getSysTime CommonException异常", e);
             int code =((ServiceException) e).getCode();

@@ -17,18 +17,18 @@
 				<li>
 					<span>商品SKU维护</span>
 				</li>
-                <%--<li>
-                    <span>订单导入</span>
-                </li> 
-                <li>  
+                <li>
+                    <span>日期汇总数据管理</span>
+                </li>
+				<%--<li>
                     <span>订单查询</span>
                 </li>
-				<li>
-					<span>报表生成</span>
-				</li>
-				<li>
-					<span>报表查看</span>
-				</li>--%>
+                <li>
+                    <span>报表生成</span>
+                </li>
+                <li>
+                    <span>报表查看</span>
+                </li>--%>
             </ul>  
 		</div>
 		<%--<div class="easyui-panel" id="divGoodsInfo" data-options="fit:true,border:false"  title="商品信息" style="padding:10px;">

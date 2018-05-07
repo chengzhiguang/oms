@@ -13,6 +13,8 @@ function getUrl(noteText) {
         url = contextPath + '/page/goods/toSkuManagerPage';
     } else if(noteText == '报表查看') {
         url = contextPath + '/page/orderreport/toReportPage';
+    } else if(noteText == '日期汇总数据管理') {
+        url = contextPath + '/page/orderreport/toReportPage';
     }
 
 
