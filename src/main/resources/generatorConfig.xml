@@ -68,7 +68,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="tb_daily_info" domainObjectName="DailyInfo"
+        <table tableName="tb_daily_detail" domainObjectName="DailyDetail"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
