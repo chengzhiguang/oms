@@ -13,6 +13,7 @@ import com.chengzg.oms.model.req.SearchGoodsInfoReq;
 import com.chengzg.oms.model.req.SearchSkuInfoReq;
 import com.chengzg.oms.model.req.SearchSpuInfoReq;
 import com.chengzg.oms.service.GoodsInfoService;
+import com.chengzg.oms.utils.Asserts;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.slf4j.Logger;
@@ -74,6 +75,29 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             spuInfo.setCreateTime(null);
             result = spuInfoMapper.updateByPrimaryKeySelective(spuInfo);
         }
+        return result;
+    }
+
+    @Override
+    public Integer saveSkuInfo(SkuInfo skuInfo) {
+        String skuCode = skuInfo.getSkuCode();
+
+        SkuInfo check = getSkuInfoByCode(skuCode);
+        Integer result = 0;
+        if (check == null) {
+            String spuCode = skuInfo.getSpuCode();
+            SpuInfo spuInfo = getSpuInfoByCode(spuCode);
+            Asserts.checkNullOrEmpty(spuInfo, "SPU信息不存在");
+            skuInfo.setSpuName(spuInfo.getSpuName());
+            skuInfo.setIsDel(0);
+            skuInfo.setCreateTime(new Date());
+            result = skuInfoMapper.insertSelective(skuInfo);
+        } else {
+            skuInfo.setId(check.getId());
+            skuInfo.setCreateTime(null);
+            result = skuInfoMapper.updateByPrimaryKeySelective(skuInfo);
+        }
+
         return result;
     }
 

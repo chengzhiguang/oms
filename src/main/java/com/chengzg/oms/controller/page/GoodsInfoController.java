@@ -179,6 +179,28 @@ public class GoodsInfoController extends BaseController {
         return this.successReturn(null);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/saveSkuInfo")
+    public ReturnResult saveSkuInfo(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info(" saveGoodsInfo start  !");
+        String spuCode = HttpUtil.getParameter(request, "spuCode", null);
+        String skuCode = HttpUtil.getParameter(request, "skuCode", null);
+        String skuName = HttpUtil.getParameter(request, "skuName", null);
+        Integer skuWeight = HttpUtil.getIntegerParameter(request, "skuWeight", null);
+
+        SkuInfo goodsInfo = SkuInfo
+                .builder()
+                .spuCode(spuCode)
+                .skuCode(skuCode)
+                .skuName(skuName)
+                .skuWeight(skuWeight)
+                .build();
+
+        goodsInfoService.saveSkuInfo(goodsInfo);
+        return this.successReturn(null);
+    }
+
     @RequestMapping(value="toMofySpuInfoPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
     ModelAndView toMofySpuInfoPage(HttpServletRequest request, HttpServletResponse response) {

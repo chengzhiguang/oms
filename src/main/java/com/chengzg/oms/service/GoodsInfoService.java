@@ -15,6 +15,8 @@ import java.util.List;
 public interface GoodsInfoService {
     Integer saveSpuInfo(SpuInfo spuInfo);
 
+    Integer saveSkuInfo(SkuInfo skuInfo);
+
     Integer mofyGoodsInfoByCode(GoodsInfo goodsInfo);
 
     Integer searchCountByWhere(SearchGoodsInfoReq orderInfo);

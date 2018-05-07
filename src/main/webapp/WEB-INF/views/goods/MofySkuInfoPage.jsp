@@ -21,16 +21,26 @@
 
     <table class="tableForm"  cellspacing="8">
         <tr  align="right">
-            <th>SPU编号：</th>
-            <td><input id="spuCode" name="spuCode" class="easyui-textbox" style="width:200px;height:30px" value="${spuInfo.spuCode}" readonly="readonly"></td>
+            <th>商品spu：</th>
+            <td>
+                <select id="spuCode" name="spuCode" class="easyui-combobox" style="width:200px;height:30px">
+                    <c:forEach items="${spuList}" var="item">
+                        <option  value="${item.spuCode }" <c:if test="${skuInfo.spuCode eq item.spuCode}">selected</c:if> >${item.spuName}</option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr  align="right">
-            <th>商品SPU名称：</th>
-            <td><input id="spuName" name="spuName" class="easyui-textbox" style="width:200px;height:30px" value="${spuInfo.spuName}"></td>
+            <th>商品SKUID：</th>
+            <td><input id="skuCode" name="skuCode" class="easyui-textbox" style="width:200px;height:30px" value="${skuInfo.skuCode }"></td>
         </tr>
         <tr  align="right">
-            <th>成本价（斤）：</th>
-            <td><input id="spuCost" name="spuCost" style="width:200px;height:30px" value="${spuInfo.spuCost}" onkeyup="javascript:checknum(this);"></td>
+            <th>商品SKU名称：</th>
+            <td><input id="skuName" name="skuName" class="easyui-textbox" style="width:200px;height:30px" value="${skuInfo.skuName }"></td>
+        </tr>
+        <tr  align="right">
+            <th>规格（克）：</th>
+            <td><input id="skuWeight" name="skuWeight" style="width:200px;height:30px" value="${skuInfo.skuWeight }" onkeyup="javascript:checkintnum(this);"></td>
         </tr>
         <tr>
             <th></th>
@@ -46,23 +56,27 @@
             return;
         }
 
-        var spuCode = $("#spuCode").val();
-        var spuName = $("#spuName").val();
-        var spuCost = $("#spuCost").val();
 
-        var url = contextPath + "/page/goods/saveSpuInfo";
+        var spuCode = $("#spuCode").combobox('getValue');
+
+        var skuCode = $("#skuCode").val();
+        var skuName = $("#skuName").val();
+        var skuWeight = $("#skuWeight").val();
+
+        var url = contextPath + "/page/goods/saveSkuInfo";
         $.ajax({
             type:"POST",
             url:url,
             data:{
                 "spuCode":spuCode,
-                "spuName":spuName,
-                "spuCost":spuCost,
+                "skuCode":skuCode,
+                "skuName":skuName,
+                "skuWeight":skuWeight,
             },
             dataType:"json",
             success:function(data) {
                 if(data.status == 'success') {
-                    parent.location = contextPath + "/page/goods/toSpuManagerPage";
+                    parent.location = contextPath + "/page/goods/toSkuManagerPage";
                 } else {
                     alert("提交失败，" + data.message);
                 }

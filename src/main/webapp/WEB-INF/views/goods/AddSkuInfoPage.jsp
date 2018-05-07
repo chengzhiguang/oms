@@ -23,7 +23,7 @@
         <tr  align="right">
             <th>商品spu：</th>
             <td>
-                <select id="spuCode" name="spuCode" class="easyui-combobox" style="width:120px;height:30px">
+                <select id="spuCode" name="spuCode" class="easyui-combobox" style="width:200px;height:30px">
                     <c:forEach items="${spuList}" var="item">
                         <option  value="${item.spuCode }">${item.spuName}</option>
                     </c:forEach>
@@ -40,7 +40,7 @@
         </tr>
         <tr  align="right">
             <th>规格（克）：</th>
-            <td><input id="skuWeight" name="skuWeight" style="width:200px;height:30px" value="" onkeyup="javascript:checknum(this);"></td>
+            <td><input id="skuWeight" name="skuWeight" style="width:200px;height:30px" value="" onkeyup="javascript:checkintnum(this);"></td>
         </tr>
         <tr>
             <th></th>
@@ -51,31 +51,33 @@
 </body>
 <script type="text/javascript">
     function submit() {
-        var check = confirm("确定提交SPU信息？");
+        var check = confirm("确定提交SKU信息？");
         if(!check) {
             return;
         }
-        var spuCode = $("#spuCode").val();
-        var spuName = $("#spuName").val();
-        var spuCost = $("#spuCost").val();
+        var spuCode = $("#spuCode").combobox('getValue');
 
-        var url = contextPath + "/page/goods/saveSpuInfo";
+        var skuCode = $("#skuCode").val();
+        var skuName = $("#skuName").val();
+        var skuWeight = $("#skuWeight").val();
+
+        var url = contextPath + "/page/goods/saveSkuInfo";
         $.ajax({
             type:"POST",
             url:url,
             data:{
                 "spuCode":spuCode,
-                "spuName":spuName,
-                "spuCost":spuCost,
+                "skuCode":skuCode,
+                "skuName":skuName,
+                "skuWeight":skuWeight,
             },
             dataType:"json",
             success:function(data) {
                 if(data.status == 'success') {
-                    parent.location = contextPath + "/page/goods/toSpuManagerPage";
+                    parent.location = contextPath + "/page/goods/toSkuManagerPage";
                 } else {
                     alert("提交失败，" + data.message);
                 }
-
             },
             error:function(result) {
                 alert("提交异常");

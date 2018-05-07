@@ -85,7 +85,7 @@
 
             } ,{
                 title : '成本价',
-                field : 'cost',
+                field : 'spuCost',
                 width : 40,
 
             } , {
