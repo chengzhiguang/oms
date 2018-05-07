@@ -134,8 +134,12 @@ public class DailyInfoController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/importDailyDetail")
     public ReturnResult importDailyDetail(HttpServletRequest request, HttpServletResponse response) {
-
         logger.info(" importDailyDetail start  !");
+
+        String dailyCode = HttpUtil.getParameter(request, "dailyCode", null);
+        Asserts.checkNullOrEmpty(dailyCode, "请选择正确的汇总信息导入");
+
+
 
         File excelFile = HttpUtil.getFileByRequest(request);
         if (excelFile == null) {
@@ -145,7 +149,7 @@ public class DailyInfoController extends BaseController {
         JSONObject excelObj = ExcelUtil.importExcel(excelFile.getPath(), 1);
         logger.info("" + excelObj.size());
 
-        dailyInfoService.importDailyInfo(excelObj);
+        dailyInfoService.importDailyDetail(dailyCode, excelObj);
         return this.successReturn(null);
     }
 

@@ -17,7 +17,7 @@ public interface DailyInfoService {
 
     Integer importDailyInfo(JSONObject dailyObj);
 
-    Integer importDailyDetail(JSONObject dailyObj);
+    Integer importDailyDetail(String dailyCode, JSONObject dailyObj);
 
 
     DailyInfo getDailyInfoByCode(String code);

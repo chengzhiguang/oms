@@ -69,7 +69,7 @@
                     parent.location = contextPath + "/page/dailyinfo/toDailyManagerPage";
 
                 }else{
-                    $.messager.alert('信息提示：',message,'info');
+                    $.messager.alert('信息提示：',jsonData.message,'info');
                 }
 
             }

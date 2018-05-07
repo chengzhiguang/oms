@@ -207,4 +207,12 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+  <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_daily_detail
+    where is_del = 0 and code = #{code,jdbcType=VARCHAR}
+  </select>
 </mapper>
