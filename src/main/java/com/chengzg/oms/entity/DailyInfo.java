@@ -15,6 +15,8 @@ public class DailyInfo {
 
     private Date date;
 
+    private String dateStr;
+
     private String code;
 
     private Integer pvCount;

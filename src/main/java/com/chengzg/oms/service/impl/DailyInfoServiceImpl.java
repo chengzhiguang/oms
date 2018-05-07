@@ -93,4 +93,16 @@ public class DailyInfoServiceImpl implements DailyInfoService {
 
         return 1;
     }
+
+    @Override
+    public Integer importDailyDetail(JSONObject dailyObj) {
+        return null;
+    }
+
+    @Override
+    public DailyInfo getDailyInfoByCode(String code) {
+        DailyInfo dailyInfo =  dailyInfoMapper.selectByCode(code);
+        dailyInfo.setDateStr(TimeUtility.formatTimeStr(dailyInfo.getDate(), TimeUtility.TIME_FORMAT_YYYY_MM_DD));
+        return dailyInfo;
+    }
 }

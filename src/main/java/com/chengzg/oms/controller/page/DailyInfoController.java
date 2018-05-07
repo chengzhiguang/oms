@@ -11,10 +11,7 @@ import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.model.req.SearchDailyInfoReq;
 import com.chengzg.oms.model.req.SearchSkuInfoReq;
 import com.chengzg.oms.service.DailyInfoService;
-import com.chengzg.oms.utils.ExcelUtil;
-import com.chengzg.oms.utils.HttpUtil;
-import com.chengzg.oms.utils.StrUtils;
-import com.chengzg.oms.utils.TimeUtility;
+import com.chengzg.oms.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +96,46 @@ public class DailyInfoController extends BaseController {
     public ReturnResult importDailyInfo(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info(" importDailyInfo start  !");
+
+        File excelFile = HttpUtil.getFileByRequest(request);
+        if (excelFile == null) {
+            return this.errorReturn(100);
+        }
+
+        JSONObject excelObj = ExcelUtil.importExcel(excelFile.getPath(), 1);
+        logger.info("" + excelObj.size());
+
+        dailyInfoService.importDailyInfo(excelObj);
+        return this.successReturn(null);
+    }
+
+
+    @RequestMapping(value="toImportDailyDetailPage",method={RequestMethod.GET, RequestMethod.POST})
+    public @ResponseBody
+    ModelAndView toImportDailyDetailPage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String dailyCode = HttpUtil.getParameter(request, "dailyCode", null);
+            Asserts.checkNullOrEmpty(dailyCode, "汇总信息不存在");
+            DailyInfo dailyInfo = dailyInfoService.getDailyInfoByCode(dailyCode);
+            Asserts.checkNullOrEmpty(dailyInfo, "汇总信息不存在");
+            request.setAttribute("dailyInfo", dailyInfo);
+
+            return new ModelAndView("dailyinfo/ImportDailyDetailPage");
+        } catch (ServiceException e) {
+            logger.error("toImportDailyDetailPage CommonException异常", e);
+            int code =((ServiceException) e).getCode();
+            return new ModelAndView("404");
+        } catch (Exception e) {
+            logger.error("toImportDailyDetailPage Exception异常", e);
+            return new ModelAndView("404");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/importDailyDetail")
+    public ReturnResult importDailyDetail(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info(" importDailyDetail start  !");
 
         File excelFile = HttpUtil.getFileByRequest(request);
         if (excelFile == null) {

@@ -16,4 +16,9 @@ public interface DailyInfoService {
     Integer searchDailyCountByWhere(SearchDailyInfoReq req);
 
     Integer importDailyInfo(JSONObject dailyObj);
+
+    Integer importDailyDetail(JSONObject dailyObj);
+
+
+    DailyInfo getDailyInfoByCode(String code);
 }

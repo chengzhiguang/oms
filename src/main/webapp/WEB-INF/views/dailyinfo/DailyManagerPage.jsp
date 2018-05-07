@@ -116,7 +116,7 @@
                 field : 'oper',
                 width : 80,
                 formatter : function(value, rowData, rowIndex) {
-                    var mark = '<span style="font-family:\'STHeitiSC-Light\', \'Heiti SC Light\', \'Heiti SC\';font-weight:200;color:#0099FF;" onclick="javascript:toModifyPage(\'' + rowData.skuCode + '\');">导入明细</span>';
+                    var mark = '<span style="font-family:\'STHeitiSC-Light\', \'Heiti SC Light\', \'Heiti SC\';font-weight:200;color:#0099FF;" onclick="javascript:toImportDailyDetailPage(\'' + rowData.code + '\');">导入明细</span>';
                     return mark;
                 }
             }] ],
@@ -150,8 +150,8 @@
         showMyWindow("导入汇总数据", contextPath + "/page/dailyinfo/toImportDailyInfoPage", 600, 500);
     }
 
-    function toImportPage(skuCode) {
-        showMyWindow("修改商品信息", contextPath + "/page/goods/toMofySkuInfoPage?skuCode="+skuCode, 600, 500);
+    function toImportDailyDetailPage(dailyCode) {
+        showMyWindow("导入明细数据", contextPath + "/page/dailyinfo/toImportDailyDetailPage?dailyCode="+dailyCode, 600, 500);
     }
 
 </script>
