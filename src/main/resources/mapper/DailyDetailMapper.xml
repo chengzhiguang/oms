@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengzg.oms.mapper.DailyDetailMapper">
+  <resultMap id="BaseResultMap" type="com.chengzg.oms.entity.DailyDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="daily_code" jdbcType="VARCHAR" property="dailyCode" />
+    <result column="spu_code" jdbcType="VARCHAR" property="spuCode" />
+    <result column="spu_name" jdbcType="VARCHAR" property="spuName" />
+    <result column="sku_code" jdbcType="VARCHAR" property="skuCode" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="pv_count" jdbcType="INTEGER" property="pvCount" />
+    <result column="uv_count" jdbcType="INTEGER" property="uvCount" />
+    <result column="order_count" jdbcType="INTEGER" property="orderCount" />
+    <result column="user_order_count" jdbcType="INTEGER" property="userOrderCount" />
+    <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, date, code, daily_code, spu_code, spu_name, sku_code, sku_name, pv_count, uv_count, 
+    order_count, user_order_count, order_amount, is_del, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_daily_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_daily_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chengzg.oms.entity.DailyDetail">
+    insert into tb_daily_detail (id, date, code, daily_code, 
+      spu_code, spu_name, sku_code, 
+      sku_name, pv_count, uv_count, 
+      order_count, user_order_count, order_amount, 
+      is_del, create_time)
+    values (#{id,jdbcType=BIGINT}, #{date,jdbcType=DATE}, #{code,jdbcType=VARCHAR}, #{dailyCode,jdbcType=VARCHAR}, 
+      #{spuCode,jdbcType=VARCHAR}, #{spuName,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, 
+      #{skuName,jdbcType=VARCHAR}, #{pvCount,jdbcType=INTEGER}, #{uvCount,jdbcType=INTEGER}, 
+      #{orderCount,jdbcType=INTEGER}, #{userOrderCount,jdbcType=INTEGER}, #{orderAmount,jdbcType=DECIMAL}, 
+      #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengzg.oms.entity.DailyDetail">
+    insert into tb_daily_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="dailyCode != null">
+        daily_code,
+      </if>
+      <if test="spuCode != null">
+        spu_code,
+      </if>
+      <if test="spuName != null">
+        spu_name,
+      </if>
+      <if test="skuCode != null">
+        sku_code,
+      </if>
+      <if test="skuName != null">
+        sku_name,
+      </if>
+      <if test="pvCount != null">
+        pv_count,
+      </if>
+      <if test="uvCount != null">
+        uv_count,
+      </if>
+      <if test="orderCount != null">
+        order_count,
+      </if>
+      <if test="userOrderCount != null">
+        user_order_count,
+      </if>
+      <if test="orderAmount != null">
+        order_amount,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dailyCode != null">
+        #{dailyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spuCode != null">
+        #{spuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spuName != null">
+        #{spuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null">
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuName != null">
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="pvCount != null">
+        #{pvCount,jdbcType=INTEGER},
+      </if>
+      <if test="uvCount != null">
+        #{uvCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderCount != null">
+        #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="userOrderCount != null">
+        #{userOrderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null">
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.DailyDetail">
+    update tb_daily_detail
+    <set>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dailyCode != null">
+        daily_code = #{dailyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spuCode != null">
+        spu_code = #{spuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spuName != null">
+        spu_name = #{spuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null">
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuName != null">
+        sku_name = #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="pvCount != null">
+        pv_count = #{pvCount,jdbcType=INTEGER},
+      </if>
+      <if test="uvCount != null">
+        uv_count = #{uvCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderCount != null">
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="userOrderCount != null">
+        user_order_count = #{userOrderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null">
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengzg.oms.entity.DailyDetail">
+    update tb_daily_detail
+    set date = #{date,jdbcType=DATE},
+      code = #{code,jdbcType=VARCHAR},
+      daily_code = #{dailyCode,jdbcType=VARCHAR},
+      spu_code = #{spuCode,jdbcType=VARCHAR},
+      spu_name = #{spuName,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      sku_name = #{skuName,jdbcType=VARCHAR},
+      pv_count = #{pvCount,jdbcType=INTEGER},
+      uv_count = #{uvCount,jdbcType=INTEGER},
+      order_count = #{orderCount,jdbcType=INTEGER},
+      user_order_count = #{userOrderCount,jdbcType=INTEGER},
+      order_amount = #{orderAmount,jdbcType=DECIMAL},
+      is_del = #{isDel,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
