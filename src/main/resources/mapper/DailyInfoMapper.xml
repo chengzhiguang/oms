@@ -172,4 +172,48 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+
+  <sql id="whereSql">
+    <where>
+      AND is_del = 0
+      <if test="date != null">
+        AND date = #{date,jdbcType=DATE}
+      </if>
+      <if test="code != null and code != ''">
+        AND code = #{code,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="limitSql">
+    <if test="start != null and rows != null">
+      LIMIT #{start}, #{rows}
+    </if>
+  </sql>
+
+
+  <select id="searchDailyListByWhere" parameterType="com.chengzg.oms.model.req.SearchDailyInfoReq" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_daily_info
+    <include refid="whereSql"/>
+    order by id DESC
+    <include refid="limitSql"/>
+  </select>
+
+  <select id="searchDailyCountByWhere" parameterType="com.chengzg.oms.model.req.SearchDailyInfoReq" resultType="java.lang.Integer">
+    select
+    COUNT(id)
+    from tb_daily_info
+    <include refid="whereSql"/>
+  </select>
+
+  <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_daily_info
+    where is_del = 0 AND code = #{code,jdbcType=VARCHAR}
+  </select>
 </mapper>
