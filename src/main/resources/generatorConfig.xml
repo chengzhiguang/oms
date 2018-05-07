@@ -68,18 +68,11 @@
         </javaClientGenerator>
 
 
-        <table tableName="tb_sku_info" domainObjectName="SkuInfo"
+        <table tableName="tb_daily_info" domainObjectName="DailyInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
-
-        <table tableName="tb_spu_info" domainObjectName="SpuInfo"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-
 
     </context>
 </generatorConfiguration>
