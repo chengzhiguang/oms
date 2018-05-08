@@ -78,7 +78,7 @@
                 }
             } ,{
                 title : '日期',
-                field : 'date',
+                field : 'dateStr',
                 width : 40,
 
             } ,{

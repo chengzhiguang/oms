@@ -58,7 +58,24 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             .softValues()
             .build();
 
+    private static Cache<String, SkuInfo> singleSkuCache = CacheBuilder
+            .newBuilder()
+            .expireAfterWrite(30, TimeUnit.MINUTES)
+            .maximumSize(100)
+            .softValues()
+            .build();
+
+    private static Cache<String, SpuInfo> singleSpuCache = CacheBuilder
+            .newBuilder()
+            .expireAfterWrite(30, TimeUnit.MINUTES)
+            .maximumSize(100)
+            .softValues()
+            .build();
+
     private static String allGoodsKey = "allGoodsKey";
+    private static String allSkuKey = "allSkuKey";
+    private static String allSpuKey = "allSpuKey";
+
 
     @Override
     public Integer saveSpuInfo(SpuInfo spuInfo) {
@@ -129,26 +146,54 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
     @Override
     public SpuInfo getSpuInfoByCode(String spuCode) {
-        SearchSpuInfoReq where = SearchSpuInfoReq
-                .builder()
-                .spuCode(spuCode)
-                .build();
-        List<SpuInfo> goodsInfoList = spuInfoMapper.searchListByWhere(where);
-        if (goodsInfoList == null || goodsInfoList.size() <= 0) {
-            return  null;
-        }
+        final String spuCodes = spuCode;
+        try {
+            SpuInfo spuInfo = singleSpuCache.get(spuCode, new Callable<SpuInfo>() {
+                @Override
+                public SpuInfo call() throws Exception {
+                    SearchSpuInfoReq where = SearchSpuInfoReq
+                            .builder()
+                            .spuCode(spuCodes)
+                            .build();
+                    List<SpuInfo> goodsInfoList = spuInfoMapper.searchListByWhere(where);
+                    if (goodsInfoList == null || goodsInfoList.size() <= 0) {
+                        return  null;
+                    }
 
-        return goodsInfoList.get(0);
+                    return goodsInfoList.get(0);
+                }
+            });
+            return spuInfo;
+        }catch (Exception e) {
+            logger.error("", e);
+        }
+        return null;
+
     }
 
     @Override
     public SkuInfo getSkuInfoByCode(String skuCode) {
-        SearchSkuInfoReq where = SearchSkuInfoReq.builder().skuCode(skuCode).build();
-        List<SkuInfo> skuList = skuInfoMapper.searchListByWhere(where);
-        if (skuList == null || skuList.size() <= 0) {
-            return null;
+
+        final String skuCode1 = skuCode;
+        try {
+            SkuInfo skuInfo = singleSkuCache.get(skuCode, new Callable<SkuInfo>() {
+                @Override
+                public SkuInfo call() throws Exception {
+                    SearchSkuInfoReq where = SearchSkuInfoReq.builder().skuCode(skuCode1).build();
+                    List<SkuInfo> skuList = skuInfoMapper.searchListByWhere(where);
+                    if (skuList == null || skuList.size() <= 0) {
+                        return null;
+                    }
+                    return skuList.get(0);
+                }
+            });
+            return skuInfo;
+        }catch (Exception e) {
+            logger.error("", e);
         }
-        return skuList.get(0);
+        return null;
+
+
     }
 
     @Override

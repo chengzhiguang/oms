@@ -13,6 +13,8 @@ public interface DailyDetailMapper {
 
     DailyDetail selectByPrimaryKey(Long id);
 
+    DailyDetail selectByCode(String code);
+
     int updateByPrimaryKeySelective(DailyDetail record);
 
     int updateByPrimaryKey(DailyDetail record);
