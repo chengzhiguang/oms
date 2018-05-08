@@ -2,6 +2,7 @@ package com.chengzg.oms.entity;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 @Setter
 @Getter
@@ -21,6 +22,8 @@ public class SkuInfo {
     private String spuName;
 
     private Integer skuWeight;
+
+    private BigDecimal spuCost;
 
     private Integer isDel;
 

@@ -88,6 +88,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             String spuCode = skuInfo.getSpuCode();
             SpuInfo spuInfo = getSpuInfoByCode(spuCode);
             Asserts.checkNullOrEmpty(spuInfo, "SPU信息不存在");
+            skuInfo.setSpuCost(spuInfo.getSpuCost());
             skuInfo.setSpuName(spuInfo.getSpuName());
             skuInfo.setIsDel(0);
             skuInfo.setCreateTime(new Date());
