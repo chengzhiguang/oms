@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,8 @@ public class DailyInfoServiceImpl implements DailyInfoService {
 
     @Autowired
     private GoodsInfoService goodsInfoService;
+
+    private static BigDecimal freight = new BigDecimal(10);
 
     @Override
     public List<DailyInfo> searchDailyListByWhere(SearchDailyInfoReq req) {
@@ -146,7 +149,25 @@ public class DailyInfoServiceImpl implements DailyInfoService {
             String detailCode = MD5Util.MD5(TimeUtility.formatTimeStr(dailyInfo.getDate(), TimeUtility.TIME_FORMAT_YYYYMMDD)+skuCode);
 
             Integer userOrderCount = Integer.parseInt(obj.getString("下单客户数").replace(",",""));
-            Integer orderCount = Integer.parseInt(obj.getString("下单单量").replace(",",""));;
+            Integer orderCount = Integer.parseInt(obj.getString("下单单量").replace(",",""));
+
+            Integer skuWeight = skuInfo.getSkuWeight();
+
+            Integer sumWeight = orderCount * skuWeight;
+
+            BigDecimal sumJin = new BigDecimal(sumWeight).divide(new BigDecimal(500), 2, RoundingMode.HALF_UP);
+
+            BigDecimal spuCost = skuInfo.getSpuCost();
+
+            BigDecimal totalCost = sumJin.multiply(spuCost);
+
+            BigDecimal sumFreight = freight.multiply(new BigDecimal(orderCount));
+
+            BigDecimal grossProfit = orderAmount.subtract(totalCost).subtract(sumFreight);
+
+            BigDecimal  grossProfitRate = orderAmount.intValue() == 0 ? new BigDecimal(0) : new BigDecimal(1).subtract(totalCost.add(sumFreight).divide(orderAmount,2,BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100));
+
+
             DailyDetail dailyDetail = new DailyDetail();
             dailyDetail.setOrderAmount(orderAmount);
             dailyDetail.setUvCount(uvCount);
@@ -163,8 +184,12 @@ public class DailyInfoServiceImpl implements DailyInfoService {
             dailyDetail.setSkuName(skuInfo.getSkuName());
             dailyDetail.setSpuCode(skuInfo.getSpuCode());
             dailyDetail.setSpuName(skuInfo.getSpuName());
+            dailyDetail.setSumJin(sumJin);
+            dailyDetail.setSumCost(totalCost);
+            dailyDetail.setSumFreight(sumFreight);
+            dailyDetail.setGrossProfit(grossProfit);
+            dailyDetail.setGrossProfitRate(grossProfitRate);
             dailyDetailList.add(dailyDetail);
-
         }
 
         dailyInfoMapper.updateByPrimaryKeySelective(dailyInfo);

@@ -15,12 +15,18 @@
     <result column="order_count" jdbcType="INTEGER" property="orderCount" />
     <result column="user_order_count" jdbcType="INTEGER" property="userOrderCount" />
     <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
+    <result column="sum_jin" jdbcType="DECIMAL" property="sumJin" />
+    <result column="sum_cost" jdbcType="DECIMAL" property="sumCost" />
+    <result column="sum_freight" jdbcType="DECIMAL" property="sumFreight" />
+    <result column="gross_profit" jdbcType="DECIMAL" property="grossProfit" />
+    <result column="gross_profit_rate" jdbcType="DECIMAL" property="grossProfitRate" />
     <result column="is_del" jdbcType="INTEGER" property="isDel" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, date, code, daily_code, spu_code, spu_name, sku_code, sku_name, pv_count, uv_count, 
-    order_count, user_order_count, order_amount, is_del, create_time
+    order_count, user_order_count, order_amount, sum_jin, sum_cost, sum_freight, gross_profit, 
+    gross_profit_rate, is_del, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -37,12 +43,16 @@
       spu_code, spu_name, sku_code, 
       sku_name, pv_count, uv_count, 
       order_count, user_order_count, order_amount, 
-      is_del, create_time)
+      sum_jin, sum_cost, sum_freight, 
+      gross_profit, gross_profit_rate, is_del, 
+      create_time)
     values (#{id,jdbcType=BIGINT}, #{date,jdbcType=DATE}, #{code,jdbcType=VARCHAR}, #{dailyCode,jdbcType=VARCHAR}, 
       #{spuCode,jdbcType=VARCHAR}, #{spuName,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, 
       #{skuName,jdbcType=VARCHAR}, #{pvCount,jdbcType=INTEGER}, #{uvCount,jdbcType=INTEGER}, 
       #{orderCount,jdbcType=INTEGER}, #{userOrderCount,jdbcType=INTEGER}, #{orderAmount,jdbcType=DECIMAL}, 
-      #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+      #{sumJin,jdbcType=DECIMAL}, #{sumCost,jdbcType=DECIMAL}, #{sumFreight,jdbcType=DECIMAL}, 
+      #{grossProfit,jdbcType=DECIMAL}, #{grossProfitRate,jdbcType=DECIMAL}, #{isDel,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.chengzg.oms.entity.DailyDetail">
     insert into tb_daily_detail
@@ -85,6 +95,21 @@
       </if>
       <if test="orderAmount != null">
         order_amount,
+      </if>
+      <if test="sumJin != null">
+        sum_jin,
+      </if>
+      <if test="sumCost != null">
+        sum_cost,
+      </if>
+      <if test="sumFreight != null">
+        sum_freight,
+      </if>
+      <if test="grossProfit != null">
+        gross_profit,
+      </if>
+      <if test="grossProfitRate != null">
+        gross_profit_rate,
       </if>
       <if test="isDel != null">
         is_del,
@@ -133,6 +158,21 @@
       <if test="orderAmount != null">
         #{orderAmount,jdbcType=DECIMAL},
       </if>
+      <if test="sumJin != null">
+        #{sumJin,jdbcType=DECIMAL},
+      </if>
+      <if test="sumCost != null">
+        #{sumCost,jdbcType=DECIMAL},
+      </if>
+      <if test="sumFreight != null">
+        #{sumFreight,jdbcType=DECIMAL},
+      </if>
+      <if test="grossProfit != null">
+        #{grossProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="grossProfitRate != null">
+        #{grossProfitRate,jdbcType=DECIMAL},
+      </if>
       <if test="isDel != null">
         #{isDel,jdbcType=INTEGER},
       </if>
@@ -180,6 +220,21 @@
       <if test="orderAmount != null">
         order_amount = #{orderAmount,jdbcType=DECIMAL},
       </if>
+      <if test="sumJin != null">
+        sum_jin = #{sumJin,jdbcType=DECIMAL},
+      </if>
+      <if test="sumCost != null">
+        sum_cost = #{sumCost,jdbcType=DECIMAL},
+      </if>
+      <if test="sumFreight != null">
+        sum_freight = #{sumFreight,jdbcType=DECIMAL},
+      </if>
+      <if test="grossProfit != null">
+        gross_profit = #{grossProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="grossProfitRate != null">
+        gross_profit_rate = #{grossProfitRate,jdbcType=DECIMAL},
+      </if>
       <if test="isDel != null">
         is_del = #{isDel,jdbcType=INTEGER},
       </if>
@@ -203,11 +258,15 @@
       order_count = #{orderCount,jdbcType=INTEGER},
       user_order_count = #{userOrderCount,jdbcType=INTEGER},
       order_amount = #{orderAmount,jdbcType=DECIMAL},
+      sum_jin = #{sumJin,jdbcType=DECIMAL},
+      sum_cost = #{sumCost,jdbcType=DECIMAL},
+      sum_freight = #{sumFreight,jdbcType=DECIMAL},
+      gross_profit = #{grossProfit,jdbcType=DECIMAL},
+      gross_profit_rate = #{grossProfitRate,jdbcType=DECIMAL},
       is_del = #{isDel,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-
 
   <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select

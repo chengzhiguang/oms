@@ -1,9 +1,7 @@
 package com.chengzg.oms.mapper;
 
 import com.chengzg.oms.entity.DailyDetail;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface DailyDetailMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -13,9 +11,10 @@ public interface DailyDetailMapper {
 
     DailyDetail selectByPrimaryKey(Long id);
 
-    DailyDetail selectByCode(String code);
-
     int updateByPrimaryKeySelective(DailyDetail record);
 
     int updateByPrimaryKey(DailyDetail record);
+
+    DailyDetail selectByCode(String code);
+
 }

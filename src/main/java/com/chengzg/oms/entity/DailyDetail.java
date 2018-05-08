@@ -37,6 +37,16 @@ public class DailyDetail {
 
     private BigDecimal orderAmount;
 
+    private BigDecimal sumJin;
+
+    private BigDecimal sumCost;
+
+    private BigDecimal sumFreight;
+
+    private BigDecimal grossProfit;
+
+    private BigDecimal grossProfitRate;
+
     private Integer isDel;
 
     private Date createTime;
