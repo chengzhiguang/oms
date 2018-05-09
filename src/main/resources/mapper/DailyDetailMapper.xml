@@ -274,4 +274,41 @@
     from tb_daily_detail
     where is_del = 0 and code = #{code,jdbcType=VARCHAR}
   </select>
+
+
+
+  <sql id="whereSql">
+    <where>
+      AND is_del = 0
+      <if test="date != null">
+        AND date = #{date,jdbcType=DATE}
+      </if>
+      <if test="code != null and code != ''">
+        AND code = #{code,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="limitSql">
+    <if test="start != null and rows != null">
+      LIMIT #{start}, #{rows}
+    </if>
+  </sql>
+
+
+  <select id="getSkuReportListByWhere" parameterType="com.chengzg.oms.model.req.SearchSkuReportReq" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_daily_detail
+    <include refid="whereSql"/>
+    order by id DESC
+    <include refid="limitSql"/>
+  </select>
+
+  <select id="getSkuReportCountByWhere" parameterType="com.chengzg.oms.model.req.SearchSkuReportReq" resultType="java.lang.Integer">
+    select
+    COUNT(id)
+    from tb_daily_detail
+    <include refid="whereSql"/>
+  </select>
 </mapper>

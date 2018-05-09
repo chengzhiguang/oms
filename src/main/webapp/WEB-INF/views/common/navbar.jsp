@@ -20,6 +20,9 @@
                 <li>
                     <span>日期汇总数据管理</span>
                 </li>
+				<li>
+					<span>商品明细统计报表</span>
+				</li>
 				<%--<li>
                     <span>订单查询</span>
                 </li>

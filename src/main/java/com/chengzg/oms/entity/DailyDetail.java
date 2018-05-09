@@ -15,6 +15,8 @@ public class DailyDetail {
 
     private Date date;
 
+    private String dateStr;
+
     private String code;
 
     private String dailyCode;
@@ -46,6 +48,8 @@ public class DailyDetail {
     private BigDecimal grossProfit;
 
     private BigDecimal grossProfitRate;
+
+    private String grossProfitRateStr;
 
     private Integer isDel;
 

@@ -15,8 +15,9 @@ function getUrl(noteText) {
         url = contextPath + '/page/orderreport/toReportPage';
     } else if(noteText == '日期汇总数据管理') {
         url = contextPath + '/page/dailyinfo/toDailyManagerPage';
+    } else if(noteText == '商品明细统计报表') {
+        url = contextPath + '/page/report/toSkuReportPage';
     }
-
 
 	return url;
 }
