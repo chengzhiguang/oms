@@ -131,13 +131,18 @@ public class DailyInfoServiceImpl implements DailyInfoService {
             JSONObject obj = dailyArray.getJSONObject(i);
             Integer pvCount = Integer.parseInt(obj.getString("浏览量").replace(",",""));
             Integer uvCount = Integer.parseInt(obj.getString("访客数").replace(",",""));
-            BigDecimal orderAmount = new BigDecimal(obj.getString("下单金额").replace(",",""));
+            BigDecimal orderAmount = new BigDecimal(obj.getString("下单金额").replace(",","").replace("-", "0"));
+            Integer orderCount = Integer.parseInt(obj.getString("下单单量").replace(",","").replace("-", "0"));
 
             if (i == 0) {
                 dailyInfo.setPvCount(pvCount);
                 dailyInfo.setUvCount(uvCount);
-                dailyInfo.setOrderAmount(orderAmount);
+                dailyInfo.setOrderAmount(orderAmount.intValue() == 0 ? null : orderAmount);
                 dailyInfo.setStatus(1);
+                continue;
+            }
+            if (orderCount == 0 || orderAmount.intValue() == 0) {
+                logger.info("没有销售额，不统计");
                 continue;
             }
             String skuCode = obj.getString("商品ID");
@@ -149,7 +154,6 @@ public class DailyInfoServiceImpl implements DailyInfoService {
             String detailCode = MD5Util.MD5(TimeUtility.formatTimeStr(dailyInfo.getDate(), TimeUtility.TIME_FORMAT_YYYYMMDD)+skuCode);
 
             Integer userOrderCount = Integer.parseInt(obj.getString("下单客户数").replace(",",""));
-            Integer orderCount = Integer.parseInt(obj.getString("下单单量").replace(",",""));
 
             Integer skuWeight = skuInfo.getSkuWeight();
 
@@ -169,13 +173,12 @@ public class DailyInfoServiceImpl implements DailyInfoService {
 
 
             DailyDetail dailyDetail = new DailyDetail();
-            dailyDetail.setOrderAmount(orderAmount);
+            dailyDetail.setOrderAmount(orderAmount.intValue() == 0 ? null : orderAmount);
             dailyDetail.setUvCount(uvCount);
             dailyDetail.setPvCount(pvCount);
             dailyDetail.setCode(detailCode);
             dailyDetail.setDailyCode(dailyInfo.getCode());
             dailyDetail.setDate(dailyInfo.getDate());
-            dailyDetail.setOrderAmount(orderAmount);
             dailyDetail.setCreateTime(new Date());
             dailyDetail.setIsDel(0);
             dailyDetail.setOrderCount(orderCount);
