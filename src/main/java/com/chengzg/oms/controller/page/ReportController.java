@@ -98,9 +98,7 @@ public class ReportController extends BaseController {
         if (StrUtils.isNullOrBlank(date)) {
             return this.errorReturn(100, "下载错误");
         }
-        SearchSkuReportReq where = SearchSkuReportReq.builder()
-                .date(StrUtils.isNullOrBlank(date) ? null : TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD))
-                .build();
+
 
         String dailyCode = MD5Util.MD5(TimeUtility.formatTimeStr(TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD), TimeUtility.TIME_FORMAT_YYYYMMDD));
 
@@ -112,6 +110,9 @@ public class ReportController extends BaseController {
             return this.errorReturn(100, "汇总信息没有导入明细不能下载");
         }
 
+        SearchSkuReportReq where = SearchSkuReportReq.builder()
+                .date(StrUtils.isNullOrBlank(date) ? null : TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD))
+                .build();
 
         List<DailyDetail> skuList = reportService.getSkuReportListByWhere(where);
 

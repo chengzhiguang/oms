@@ -212,6 +212,9 @@ public class DailyInfoServiceImpl implements DailyInfoService {
     @Override
     public DailyInfo getDailyInfoByCode(String code) {
         DailyInfo dailyInfo =  dailyInfoMapper.selectByCode(code);
+        if (dailyInfo == null) {
+            return null;
+        }
         dailyInfo.setDateStr(TimeUtility.formatTimeStr(dailyInfo.getDate(), TimeUtility.TIME_FORMAT_YYYY_MM_DD));
         return dailyInfo;
     }
