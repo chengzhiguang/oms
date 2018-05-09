@@ -33,7 +33,7 @@ public class HttpUtil {
 
     private static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
-    public static String urlFile = "/Users/chengzhiguang/tempfile/";
+    public static String urlFile = "/home/chengzg/tempfile/";
 
     public static String getTextContent(InputStream inputStream, String encoding) throws Exception {
         byte[] data = readStream(inputStream);

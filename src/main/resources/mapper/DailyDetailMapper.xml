@@ -311,4 +311,20 @@
     from tb_daily_detail
     <include refid="whereSql"/>
   </select>
+
+  <select id="getSpuReportListByWhere" parameterType="com.chengzg.oms.model.req.SearchSpuReportReq" resultType="com.chengzg.oms.model.SpuReportModel">
+    SELECT
+    spu_code spuCode,
+    spu_name spuName,
+    SUM(sum_jin) sumJin,
+    SUM(sum_cost) sumCost,
+    SUM(order_amount) orderAmount,
+    SUM(sum_freight) sumFreight,
+    SUM(gross_profit) grossProfit
+    FROM
+    tb_daily_detail
+    <include refid="whereSql"/>
+    GROUP BY
+    spu_code
+  </select>
 </mapper>
