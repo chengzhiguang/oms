@@ -106,10 +106,10 @@ public class ReportController extends BaseController {
 
         DailyInfo dailyInfo = dailyInfoService.getDailyInfoByCode(dailyCode);
         if (dailyInfo == null) {
-            return this.errorReturn(100, "下载错误");
+            return this.errorReturn(100, "没有找到汇总信息不能下载");
         }
         if (dailyInfo.getStatus() != 1) {
-            return this.errorReturn(100, "下载错误");
+            return this.errorReturn(100, "汇总信息没有导入明细不能下载");
         }
 
 
