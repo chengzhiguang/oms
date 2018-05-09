@@ -1,5 +1,6 @@
 package com.chengzg.oms.interceptor;
 
+import com.chengzg.oms.utils.IpUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by zhanjunwei on 15/7/30.
@@ -54,6 +56,9 @@ public class CommonControllerInterceptor extends HandlerInterceptorAdapter {
 
         //设置请求唯一值
         String uuid = request.getParameter("uuid");
+        if (StringUtils.isBlank(uuid)) {
+            uuid = UUID.randomUUID().toString();
+        }
         if (!StringUtils.isBlank(uuid)) {
             String oldThreadName = Thread.currentThread().getName();
             StringBuilder tn = new StringBuilder();
@@ -75,7 +80,11 @@ public class CommonControllerInterceptor extends HandlerInterceptorAdapter {
                 logUrlSb.append("&");
             }
         }
-        logger.info(logUrlSb.toString());
+
+        String useIp = IpUtils.getIpAddr(request);
+
+
+        logger.info("【{}】" + logUrlSb.toString(),useIp);
         return true;
     }
 
