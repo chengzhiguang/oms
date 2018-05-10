@@ -12,6 +12,8 @@ import lombok.*;
 @Builder
 @ToString
 public class SearchSkuInfoReq {
+    private String storeCode;
+
     private String skuName;
 
     private String skuCode;

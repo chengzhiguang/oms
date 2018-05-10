@@ -25,6 +25,10 @@
             <td><input id="spuCode" name="spuCode" class="easyui-textbox" style="width:200px;height:30px" value="${spuInfo.spuCode}" readonly="readonly"></td>
         </tr>
         <tr  align="right">
+            <th>商铺：</th>
+            <td><input id="storeName" name="storeName" class="easyui-textbox" style="width:200px;height:30px" value="${spuInfo.storeName}" readonly="readonly"></td>
+        </tr>
+        <tr  align="right">
             <th>商品SPU名称：</th>
             <td><input id="spuName" name="spuName" class="easyui-textbox" style="width:200px;height:30px" value="${spuInfo.spuName}"></td>
         </tr>

@@ -25,6 +25,16 @@
             <td><input id="spuCode" name="spuCode" class="easyui-textbox" style="width:200px;height:30px" value="${spuCode}" readonly="readonly"></td>
         </tr>
         <tr  align="right">
+            <th>商铺：</th>
+            <td>
+                <select id="storeCode" name="storeCode" class="easyui-combobox" style="width:200px;height:30px">
+                    <c:forEach items="${storeList}" var="item">
+                        <option  value="${item.storeCode }">${item.storeName}</option>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
+        <tr  align="right">
             <th>商品SPU名称：</th>
             <td><input id="spuName" name="spuName" class="easyui-textbox" style="width:200px;height:30px" value=""></td>
         </tr>
@@ -45,6 +55,7 @@
         if(!check) {
             return;
         }
+        var storeCode = $("#storeCode").combobox('getValue');
         var spuCode = $("#spuCode").val();
         var spuName = $("#spuName").val();
         var spuCost = $("#spuCost").val();
@@ -54,6 +65,7 @@
             type:"POST",
             url:url,
             data:{
+                "storeCode":storeCode,
                 "spuCode":spuCode,
                 "spuName":spuName,
                 "spuCost":spuCost,

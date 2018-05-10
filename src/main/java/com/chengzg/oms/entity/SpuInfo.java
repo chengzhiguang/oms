@@ -13,6 +13,10 @@ import java.util.Date;
 public class SpuInfo {
     private Long id;
 
+    private String storeCode;
+
+    private String storeName;
+
     private String spuCode;
 
     private String spuName;

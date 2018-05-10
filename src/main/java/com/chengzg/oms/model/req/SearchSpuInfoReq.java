@@ -12,6 +12,9 @@ import lombok.*;
 @Builder
 @ToString
 public class SearchSpuInfoReq {
+
+    private String storeCode;
+
     private String spuName;
 
     private String spuCode;

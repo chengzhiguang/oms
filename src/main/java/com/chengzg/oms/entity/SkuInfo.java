@@ -13,6 +13,10 @@ import java.util.Date;
 public class SkuInfo {
     private Long id;
 
+    private String storeCode;
+
+    private String storeName;
+
     private String skuCode;
 
     private String skuName;

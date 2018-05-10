@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.chengzg.oms.controller.support.BaseController;
 import com.chengzg.oms.controller.support.PageResponse;
 import com.chengzg.oms.controller.support.ReturnResult;
-import com.chengzg.oms.entity.GoodsInfo;
-import com.chengzg.oms.entity.OrderInfo;
-import com.chengzg.oms.entity.SkuInfo;
-import com.chengzg.oms.entity.SpuInfo;
+import com.chengzg.oms.entity.*;
 import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.model.req.SearchGoodsInfoReq;
 import com.chengzg.oms.model.req.SearchOrderInfoReq;
@@ -15,6 +12,7 @@ import com.chengzg.oms.model.req.SearchSkuInfoReq;
 import com.chengzg.oms.model.req.SearchSpuInfoReq;
 import com.chengzg.oms.service.GoodsInfoService;
 import com.chengzg.oms.service.OrderInfoService;
+import com.chengzg.oms.service.StoreInfoService;
 import com.chengzg.oms.utils.Asserts;
 import com.chengzg.oms.utils.ExcelUtil;
 import com.chengzg.oms.utils.HttpUtil;
@@ -46,10 +44,15 @@ public class GoodsInfoController extends BaseController {
     @Autowired
     private GoodsInfoService goodsInfoService;
 
+    @Autowired
+    private StoreInfoService storeInfoService;
+
     @RequestMapping(value="toSpuManagerPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
     ModelAndView toGoodsManagerPage(HttpServletRequest request, HttpServletResponse response) {
         try {
+            List<StoreInfo> storeList = storeInfoService.getAllList();
+            request.setAttribute("storeList", storeList);
             return new ModelAndView("goods/SpuManagerPage");
         } catch (ServiceException e) {
             logger.error("toGoodsManagerPage CommonException异常", e);
@@ -65,6 +68,8 @@ public class GoodsInfoController extends BaseController {
     public @ResponseBody
     ModelAndView toSkuManagerPage(HttpServletRequest request, HttpServletResponse response) {
         try {
+            List<StoreInfo> storeList = storeInfoService.getAllList();
+            request.setAttribute("storeList", storeList);
             return new ModelAndView("goods/SkuManagerPage");
         } catch (ServiceException e) {
             logger.error("toGoodsManagerPage CommonException异常", e);
@@ -83,9 +88,12 @@ public class GoodsInfoController extends BaseController {
         Integer pageSize = HttpUtil.getIntegerParameter(request, "rows", 10);
 
         String skuName = HttpUtil.getParameter(request, "skuName", null);
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
+        Asserts.checkNullOrEmpty(storeCode, "请选择商铺");
 
         SearchSkuInfoReq where = SearchSkuInfoReq.builder()
                 .skuName(skuName)
+                .storeCode(storeCode)
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
@@ -104,9 +112,11 @@ public class GoodsInfoController extends BaseController {
         Integer pageNum = HttpUtil.getIntegerParameter(request, "page", 1);
         Integer pageSize = HttpUtil.getIntegerParameter(request, "rows", 10);
 
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
         String spuName = HttpUtil.getParameter(request, "spuName", null);
-
+        Asserts.checkNullOrEmpty(storeCode, "请选择商铺");
         SearchSpuInfoReq where = SearchSpuInfoReq.builder()
+                .storeCode(storeCode)
                 .spuName(spuName)
                 .pageNum(pageNum)
                 .pageSize(pageSize)
@@ -123,6 +133,9 @@ public class GoodsInfoController extends BaseController {
     public @ResponseBody
     ModelAndView toAddSpuInfoPage(HttpServletRequest request, HttpServletResponse response) {
         try {
+            List<StoreInfo> storeList = storeInfoService.getAllList();
+            request.setAttribute("storeList", storeList);
+
             String spuCode = UUID.randomUUID().toString().replace("-", "");
             request.setAttribute("spuCode", spuCode);
             return new ModelAndView("goods/AddSpuInfoPage");
@@ -140,7 +153,8 @@ public class GoodsInfoController extends BaseController {
     public @ResponseBody
     ModelAndView toAddSkuInfoPage(HttpServletRequest request, HttpServletResponse response) {
         try {
-
+            List<StoreInfo> storeList = storeInfoService.getAllList();
+            request.setAttribute("storeList", storeList);
 
             SearchSpuInfoReq where = SearchSpuInfoReq.builder()
                     .build();
@@ -164,12 +178,14 @@ public class GoodsInfoController extends BaseController {
     public ReturnResult saveSpuInfo(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info(" saveGoodsInfo start  !");
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
         String spuCode = HttpUtil.getParameter(request, "spuCode", null);
         String spuName = HttpUtil.getParameter(request, "spuName", null);
         BigDecimal spuCost = HttpUtil.getBigDecimal(request, "spuCost");
 
         SpuInfo goodsInfo = SpuInfo
                 .builder()
+                .storeCode(storeCode)
                 .spuCode(spuCode)
                 .spuName(spuName)
                 .spuCost(spuCost)
@@ -184,6 +200,7 @@ public class GoodsInfoController extends BaseController {
     public ReturnResult saveSkuInfo(HttpServletRequest request, HttpServletResponse response) {
 
         logger.info(" saveGoodsInfo start  !");
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
         String spuCode = HttpUtil.getParameter(request, "spuCode", null);
         String skuCode = HttpUtil.getParameter(request, "skuCode", null);
         String skuName = HttpUtil.getParameter(request, "skuName", null);
@@ -191,6 +208,7 @@ public class GoodsInfoController extends BaseController {
 
         SkuInfo goodsInfo = SkuInfo
                 .builder()
+                .storeCode(storeCode)
                 .spuCode(spuCode)
                 .skuCode(skuCode)
                 .skuName(skuName)

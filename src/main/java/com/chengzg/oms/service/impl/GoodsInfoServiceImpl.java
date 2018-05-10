@@ -2,10 +2,7 @@ package com.chengzg.oms.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.chengzg.oms.entity.GoodsInfo;
-import com.chengzg.oms.entity.SkuInfo;
-import com.chengzg.oms.entity.SpuInfo;
-import com.chengzg.oms.entity.WhiteData;
+import com.chengzg.oms.entity.*;
 import com.chengzg.oms.mapper.GoodsInfoMapper;
 import com.chengzg.oms.mapper.SkuInfoMapper;
 import com.chengzg.oms.mapper.SpuInfoMapper;
@@ -13,6 +10,7 @@ import com.chengzg.oms.model.req.SearchGoodsInfoReq;
 import com.chengzg.oms.model.req.SearchSkuInfoReq;
 import com.chengzg.oms.model.req.SearchSpuInfoReq;
 import com.chengzg.oms.service.GoodsInfoService;
+import com.chengzg.oms.service.StoreInfoService;
 import com.chengzg.oms.utils.Asserts;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -43,6 +41,9 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
     @Autowired
     private SkuInfoMapper skuInfoMapper;
+
+    @Autowired
+    private StoreInfoService storeInfoService;
 
     private Cache<String,List> goodsInfoCache = CacheBuilder
             .newBuilder()
@@ -83,8 +84,10 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         SpuInfo check = getSpuInfoByCode(spuCode);
         Integer result = 0;
         if (check == null) {
+            StoreInfo storeInfo = storeInfoService.getStoreInfoByCode(spuInfo.getStoreCode());
             spuInfo.setIsDel(0);
             spuInfo.setCreateTime(new Date());
+            spuInfo.setStoreName(storeInfo.getStoreName());
             result = spuInfoMapper.insertSelective(spuInfo);
         } else {
             spuInfo.setIsDel(0);
@@ -92,6 +95,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             spuInfo.setCreateTime(null);
             result = spuInfoMapper.updateByPrimaryKeySelective(spuInfo);
         }
+        singleSpuCache.invalidateAll();
         return result;
     }
 
@@ -102,9 +106,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         SkuInfo check = getSkuInfoByCode(skuCode);
         Integer result = 0;
         if (check == null) {
+            StoreInfo storeInfo = storeInfoService.getStoreInfoByCode(skuInfo.getStoreCode());
+
             String spuCode = skuInfo.getSpuCode();
             SpuInfo spuInfo = getSpuInfoByCode(spuCode);
             Asserts.checkNullOrEmpty(spuInfo, "SPU信息不存在");
+            skuInfo.setStoreName(storeInfo.getStoreName());
             skuInfo.setSpuCost(spuInfo.getSpuCost());
             skuInfo.setSpuName(spuInfo.getSpuName());
             skuInfo.setIsDel(0);

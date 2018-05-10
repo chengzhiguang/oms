@@ -21,10 +21,19 @@
         <legend>筛选</legend>
         <table class="tableForm">
             <tr>
+                <th>商铺：</th>
+                <td>
+                    <select id="storeCode" name="storeCode" class="easyui-combobox" style="width:200px;height:30px">
+                        <c:forEach items="${storeList}" var="item">
+                            <option  value="${item.storeCode }">${item.storeName}</option>
+                        </c:forEach>
+                    </select>
+                </td>
                 <th>SPU名称：</th>
                 <th>
                     <input id="spuName" name="spuName" class="easyui-textbox" style="width:200px;height:32px">
                 </th>
+
             </tr>
             <tr>
                 <th>
@@ -74,6 +83,11 @@
                     return rowIndex+1;
                 }
             } ,{
+                title : '商铺',
+                field : 'spuCode',
+                width : 40,
+
+            } ,{
                 title : '商品SPU标示',
                 field : 'spuCode',
                 width : 40,
@@ -120,6 +134,7 @@
 
     function searchFun() {
         datagrid.datagrid('load', {
+            storeCode : $("#storeCode").combobox('getValue'),
             spuName : $('input[name=spuName]').val(),
         });
     }

@@ -68,4 +68,13 @@ public class StoreInfoServiceImpl implements StoreInfoService {
 
         return storeInfo;
     }
+
+    @Override
+    public List<StoreInfo> getAllList() {
+        SearchStooreInfoReq req = new SearchStooreInfoReq();
+        List<StoreInfo> list = storeInfoMapper.searchListByWhere(req);
+        for (StoreInfo dailyInfo : list) {
+        }
+        return list;
+    }
 }

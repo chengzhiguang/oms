@@ -21,7 +21,7 @@
 
     <table class="tableForm"  cellspacing="8">
         <tr  align="right">
-            <th>商品spu：</th>
+            <th>商品SPU：</th>
             <td>
                 <select id="spuCode" name="spuCode" class="easyui-combobox" style="width:200px;height:30px">
                     <c:forEach items="${spuList}" var="item">
@@ -29,6 +29,10 @@
                     </c:forEach>
                 </select>
             </td>
+        </tr>
+        <tr  align="right">
+            <th>商铺：</th>
+            <td><input id="storeName" name="storeName" class="easyui-textbox" style="width:200px;height:30px" value="${skuInfo.storeName}" readonly="readonly"></td>
         </tr>
         <tr  align="right">
             <th>商品SKUID：</th>

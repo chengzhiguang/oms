@@ -3,6 +3,8 @@
 <mapper namespace="com.chengzg.oms.mapper.SkuInfoMapper">
   <resultMap id="BaseResultMap" type="com.chengzg.oms.entity.SkuInfo">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
     <result column="sku_code" jdbcType="VARCHAR" property="skuCode" />
     <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
     <result column="spu_code" jdbcType="VARCHAR" property="spuCode" />
@@ -13,7 +15,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, sku_code, sku_name, spu_code, spu_name, sku_weight, is_del, create_time,spu_cost
+    id, store_code, store_name, sku_code, sku_name, spu_code, spu_name, sku_weight, is_del, create_time,spu_cost
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -26,10 +28,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.chengzg.oms.entity.SkuInfo">
-    insert into tb_sku_info (id, sku_code, sku_name, spu_cost,
+    insert into tb_sku_info (id, store_code, store_name, sku_code, sku_name, spu_cost,
       spu_code, spu_name, sku_weight, 
       is_del, create_time)
-    values (#{id,jdbcType=BIGINT}, #{skuCode,jdbcType=VARCHAR}, #{skuName,jdbcType=VARCHAR}, #{spuCost,jdbcType=DECIMAL},
+    values (#{id,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, #{skuName,jdbcType=VARCHAR}, #{spuCost,jdbcType=DECIMAL},
       #{spuCode,jdbcType=VARCHAR}, #{spuName,jdbcType=VARCHAR}, #{skuWeight,jdbcType=INTEGER}, 
       #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
@@ -38,6 +40,12 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="storeCode != null">
+        store_code,
+      </if>
+      <if test="storeName != null">
+        store_name,
       </if>
       <if test="skuCode != null">
         sku_code,
@@ -68,6 +76,12 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="storeCode != null">
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
       <if test="skuCode != null">
         #{skuCode,jdbcType=VARCHAR},
       </if>
@@ -97,6 +111,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.SkuInfo">
     update tb_sku_info
     <set>
+      <if test="storeCode != null">
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
       <if test="skuCode != null">
         sku_code = #{skuCode,jdbcType=VARCHAR},
       </if>
@@ -126,7 +146,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chengzg.oms.entity.SkuInfo">
     update tb_sku_info
-    set sku_code = #{skuCode,jdbcType=DECIMAL},
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+    store_name = #{storeName,jdbcType=VARCHAR},
+    sku_code = #{skuCode,jdbcType=DECIMAL},
     spu_cost = #{spuCost,jdbcType=VARCHAR},
       sku_name = #{skuName,jdbcType=VARCHAR},
       spu_code = #{spuCode,jdbcType=VARCHAR},
@@ -146,6 +168,9 @@
       </if>
       <if test="skuCode != null and skuCode != ''">
         AND sku_code = #{skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="storeCode != null and storeCode != ''">
+        AND store_code = #{storeCode,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>

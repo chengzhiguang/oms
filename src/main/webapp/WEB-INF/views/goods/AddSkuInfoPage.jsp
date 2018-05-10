@@ -31,6 +31,16 @@
             </td>
         </tr>
         <tr  align="right">
+            <th>商铺：</th>
+            <td>
+                <select id="storeCode" name="storeCode" class="easyui-combobox" style="width:200px;height:30px">
+                    <c:forEach items="${storeList}" var="item">
+                        <option  value="${item.storeCode }">${item.storeName}</option>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
+        <tr  align="right">
             <th>商品SKUID：</th>
             <td><input id="skuCode" name="skuCode" class="easyui-textbox" style="width:200px;height:30px" value=""></td>
         </tr>
@@ -55,8 +65,8 @@
         if(!check) {
             return;
         }
+        var storeCode = $("#storeCode").combobox('getValue');
         var spuCode = $("#spuCode").combobox('getValue');
-
         var skuCode = $("#skuCode").val();
         var skuName = $("#skuName").val();
         var skuWeight = $("#skuWeight").val();
@@ -66,6 +76,7 @@
             type:"POST",
             url:url,
             data:{
+                "storeCode":storeCode,
                 "spuCode":spuCode,
                 "skuCode":skuCode,
                 "skuName":skuName,

@@ -18,4 +18,6 @@ public interface StoreInfoService {
 
     StoreInfo getStoreInfoByCode(String storeCodoe);
 
+    List<StoreInfo> getAllList();
+
 }
