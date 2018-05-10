@@ -12,6 +12,9 @@
 		<div class="easyui-panel" id="divWorkSurface" data-options="fit:true,border:false"  title="京东订单" style="padding:10px;">
 			<ul id="WorkSurfaceTree">
 				<li>
+					<span>商铺维护</span>
+				</li>
+				<li>
 					<span>商品SPU维护</span>
 				</li>
 				<li>

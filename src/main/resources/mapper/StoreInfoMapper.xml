@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengzg.oms.mapper.StoreInfoMapper">
+  <resultMap id="BaseResultMap" type="com.chengzg.oms.entity.StoreInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="store_freight" jdbcType="DECIMAL" property="storeFreight" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, store_code, store_name, store_freight, is_del, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_store_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_store_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chengzg.oms.entity.StoreInfo">
+    insert into tb_store_info (id, store_code, store_name, 
+      store_freight, is_del, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, 
+      #{storeFreight,jdbcType=DECIMAL}, #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengzg.oms.entity.StoreInfo">
+    insert into tb_store_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="storeCode != null">
+        store_code,
+      </if>
+      <if test="storeName != null">
+        store_name,
+      </if>
+      <if test="storeFreight != null">
+        store_freight,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="storeCode != null">
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeFreight != null">
+        #{storeFreight,jdbcType=DECIMAL},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.StoreInfo">
+    update tb_store_info
+    <set>
+      <if test="storeCode != null">
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeFreight != null">
+        store_freight = #{storeFreight,jdbcType=DECIMAL},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengzg.oms.entity.StoreInfo">
+    update tb_store_info
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      store_freight = #{storeFreight,jdbcType=DECIMAL},
+      is_del = #{isDel,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <sql id="whereSql">
+    <where>
+      AND is_del = 0
+      <if test="storeName != null and storeName != ''">
+        AND store_name = #{storeName,jdbcType=VARCHAR}
+      </if>
+      <if test="storeCode != null and storeCode != ''">
+        AND store_code = #{storeCode,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="limitSql">
+    <if test="start != null and rows != null">
+      LIMIT #{start}, #{rows}
+    </if>
+  </sql>
+
+
+  <select id="searchListByWhere" parameterType="com.chengzg.oms.model.req.SearchStooreInfoReq" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_store_info
+    <include refid="whereSql"/>
+    order by id DESC
+    <include refid="limitSql"/>
+  </select>
+
+  <select id="searchCountByWhere" parameterType="com.chengzg.oms.model.req.SearchStooreInfoReq" resultType="java.lang.Integer">
+    select
+    COUNT(id)
+    from tb_store_info
+    <include refid="whereSql"/>
+  </select>
+
+  <select id="getStoreInfoByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_store_info
+    where is_del = 0 and store_code = #{storeCode,jdbcType=VARCHAR}
+  </select>
+</mapper>
