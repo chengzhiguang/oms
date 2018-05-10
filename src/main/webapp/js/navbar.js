@@ -19,6 +19,8 @@ function getUrl(noteText) {
         url = contextPath + '/page/report/toSkuReportPage';
     } else if(noteText == '商铺维护') {
         url = contextPath + '/page/storeinfo/toStoreManagerPage';
+    } else if(noteText == '员工信息管理') {
+        url = contextPath + '/page/user/toUserManagerPage';
     }
 
 	return url;

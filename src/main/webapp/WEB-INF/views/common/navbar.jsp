@@ -26,6 +26,9 @@
 				<li>
 					<span>商品明细统计报表</span>
 				</li>
+				<li>
+					<span>员工信息管理</span>
+				</li>
 				<%--<li>
                     <span>订单查询</span>
                 </li>
