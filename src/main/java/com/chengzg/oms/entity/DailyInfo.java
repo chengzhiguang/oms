@@ -19,6 +19,10 @@ public class DailyInfo {
 
     private String code;
 
+    private String storeCode;
+
+    private String storeName;
+
     private Integer pvCount;
 
     private Integer uvCount;

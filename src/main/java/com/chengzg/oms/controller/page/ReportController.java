@@ -5,6 +5,7 @@ import com.chengzg.oms.controller.support.PageResponse;
 import com.chengzg.oms.controller.support.ReturnResult;
 import com.chengzg.oms.entity.DailyDetail;
 import com.chengzg.oms.entity.DailyInfo;
+import com.chengzg.oms.entity.StoreInfo;
 import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.model.SpuReportModel;
 import com.chengzg.oms.model.req.SearchDailyInfoReq;
@@ -12,10 +13,8 @@ import com.chengzg.oms.model.req.SearchSkuReportReq;
 import com.chengzg.oms.model.req.SearchSpuReportReq;
 import com.chengzg.oms.service.DailyInfoService;
 import com.chengzg.oms.service.ReportService;
-import com.chengzg.oms.utils.HttpUtil;
-import com.chengzg.oms.utils.MD5Util;
-import com.chengzg.oms.utils.StrUtils;
-import com.chengzg.oms.utils.TimeUtility;
+import com.chengzg.oms.service.StoreInfoService;
+import com.chengzg.oms.utils.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,10 +46,15 @@ public class ReportController extends BaseController {
     @Autowired
     private DailyInfoService dailyInfoService;
 
+    @Autowired
+    private StoreInfoService storeInfoService;
+
     @RequestMapping(value="toSkuReportPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
     ModelAndView toDailyManagerPage(HttpServletRequest request, HttpServletResponse response) {
         try {
+            List<StoreInfo> storeList = storeInfoService.getAllList();
+            request.setAttribute("storeList", storeList);
             return new ModelAndView("report/SkuReportPage");
         } catch (ServiceException e) {
             logger.error("toSkuReportPage CommonException异常", e);
@@ -68,7 +72,8 @@ public class ReportController extends BaseController {
     public PageResponse searchSkuReportList(HttpServletRequest request, HttpServletResponse response) {
         Integer pageNum = HttpUtil.getIntegerParameter(request, "page", 1);
         Integer pageSize = HttpUtil.getIntegerParameter(request, "rows", 10);
-
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
+        Asserts.checkNullOrEmpty(storeCode, "商户不能为空");
         String date = HttpUtil.getParameter(request, "date", null);
         if (StrUtils.isNullOrBlank(date)) {
             return this.successPageReturn(pageNum + 1, 0, new ArrayList());
@@ -76,6 +81,7 @@ public class ReportController extends BaseController {
 
         SearchSkuReportReq where = SearchSkuReportReq.builder()
                 .date(StrUtils.isNullOrBlank(date) ? null : TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD))
+                .storeCode(storeCode)
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
@@ -93,14 +99,16 @@ public class ReportController extends BaseController {
     public ReturnResult exportSkuReport(HttpServletRequest request, HttpServletResponse response) {
         Integer pageNum = HttpUtil.getIntegerParameter(request, "page", 1);
         Integer pageSize = HttpUtil.getIntegerParameter(request, "rows", 10);
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
+        Asserts.checkNullOrEmpty(storeCode, "商户不能为空");
 
         String date = HttpUtil.getParameter(request, "date", null);
         if (StrUtils.isNullOrBlank(date)) {
-            return this.errorReturn(100, "下载错误");
+            return this.errorReturn(100, "请选择日期");
         }
 
 
-        String dailyCode = MD5Util.MD5(TimeUtility.formatTimeStr(TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD), TimeUtility.TIME_FORMAT_YYYYMMDD));
+        String dailyCode = MD5Util.MD5(storeCode + "_" + TimeUtility.formatTimeStr( TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD), TimeUtility.TIME_FORMAT_YYYYMMDD));
 
         DailyInfo dailyInfo = dailyInfoService.getDailyInfoByCode(dailyCode);
         if (dailyInfo == null) {
@@ -112,12 +120,14 @@ public class ReportController extends BaseController {
 
         SearchSkuReportReq where = SearchSkuReportReq.builder()
                 .date(StrUtils.isNullOrBlank(date) ? null : TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD))
+                .storeCode(storeCode)
                 .build();
 
         List<DailyDetail> skuList = reportService.getSkuReportListByWhere(where);
 
         SearchSpuReportReq spuWhere = SearchSpuReportReq.builder()
                 .date(StrUtils.isNullOrBlank(date) ? null : TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD))
+                .storeCode(storeCode)
                 .build();
 
         List<SpuReportModel> spuList = reportService.getSpuReportListByWhere(spuWhere);
@@ -126,7 +136,7 @@ public class ReportController extends BaseController {
             HSSFWorkbook workbook = reportService.createSkuReportExcel(dailyInfo, skuList, spuList);
             response.reset();//清空输出流
             response.setContentType("application/vnd.ms-excel");//设置响应数据格式
-            String fileName ="商品统计报表-"+TimeUtility.formatTimeStr(new Date(), TimeUtility.TIME_FORMAT_YYYYMMDDHHMMss) +".xls";//下载文件名
+            String fileName ="【"+dailyInfo.getStoreName() + "】商品统计报表-"+TimeUtility.formatTimeStr(new Date(), TimeUtility.TIME_FORMAT_YYYYMMDDHHMMss) +".xls";//下载文件名
             response.setHeader("Content-Disposition", "attachment;fileName="+ new String( fileName.getBytes("gb2312"), "ISO8859-1" ) +"");//通知浏览器下载格式,解决下载文件名中文乱码问题
             OutputStream out = response.getOutputStream();
             workbook.write(out);

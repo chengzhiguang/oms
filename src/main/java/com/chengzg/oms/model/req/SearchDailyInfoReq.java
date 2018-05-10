@@ -14,6 +14,7 @@ import java.util.Date;
 @Builder
 @ToString
 public class SearchDailyInfoReq {
+    private String storeCode;
     private String code;
 
     private Date date;

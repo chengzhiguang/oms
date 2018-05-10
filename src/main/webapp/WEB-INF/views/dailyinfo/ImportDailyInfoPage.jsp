@@ -22,6 +22,16 @@
 
     <form  id="import_form" method="post" enctype="multipart/form-data">
         <table class="tableForm"  cellspacing="8">
+            <tr>
+                <th>商铺：</th>
+                <td>
+                    <select id="storeCode" name="storeCode" class="easyui-combobox" style="width:200px;height:30px">
+                        <c:forEach items="${storeList}" var="item">
+                            <option  value="${item.storeCode }">${item.storeName}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
             <tr  align="right">
                 <th align="right">
                     <b id="fileB" style="color: red;width: 4px;float: left;">*</b>附件：

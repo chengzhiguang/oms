@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chengzg.oms.entity.DailyDetail;
 import com.chengzg.oms.entity.DailyInfo;
 import com.chengzg.oms.entity.SkuInfo;
+import com.chengzg.oms.entity.StoreInfo;
 import com.chengzg.oms.enums.DailyInfoStatus;
 import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.mapper.DailyDetailMapper;
@@ -67,7 +68,7 @@ public class DailyInfoServiceImpl implements DailyInfoService {
     }
 
     @Override
-    public Integer importDailyInfo(JSONObject dailyObj) {
+    public Integer importDailyInfo(StoreInfo storeInfo, JSONObject dailyObj) {
         Asserts.checkNullOrEmpty(dailyObj, "解析excel失败");
         if (!dailyObj.containsKey("sheet0")) {
             throw new ServiceException(100, "解析excel失败");
@@ -88,8 +89,10 @@ public class DailyInfoServiceImpl implements DailyInfoService {
             Integer uvCount = Integer.parseInt(obj.getString("访客数"));
             DailyInfo dailyInfo = DailyInfo
                     .builder()
-                    .code(MD5Util.MD5(obj.getString("日期")))
+                    .code(MD5Util.MD5(storeInfo.getStoreCode() + "_" + obj.getString("日期")))
                     .createTime(new Date())
+                    .storeCode(storeInfo.getStoreCode())
+                    .storeName(storeInfo.getStoreName())
                     .date(date)
                     .isDel(0)
                     .orderAmount(orderAmount)
@@ -174,6 +177,8 @@ public class DailyInfoServiceImpl implements DailyInfoService {
 
 
             DailyDetail dailyDetail = new DailyDetail();
+            dailyDetail.setStoreCode(dailyInfo.getStoreCode());
+            dailyDetail.setStoreName(dailyInfo.getStoreName());
             dailyDetail.setOrderAmount(orderAmount.intValue() == 0 ? null : orderAmount);
             dailyDetail.setUvCount(uvCount);
             dailyDetail.setPvCount(pvCount);

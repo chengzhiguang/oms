@@ -5,6 +5,8 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="date" jdbcType="DATE" property="date" />
     <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
     <result column="pv_count" jdbcType="INTEGER" property="pvCount" />
     <result column="uv_count" jdbcType="INTEGER" property="uvCount" />
     <result column="user_order_count" jdbcType="INTEGER" property="userOrderCount" />
@@ -16,7 +18,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, date, code, pv_count, uv_count, user_order_count, order_count, order_amount, 
+    id, store_code, store_name, date, code, pv_count, uv_count, user_order_count, order_count, order_amount,
     user_price, status, is_del, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -30,11 +32,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.chengzg.oms.entity.DailyInfo">
-    insert into tb_daily_info (id, date, code, pv_count, 
+    insert into tb_daily_info (id, store_code, store_name, date, code, pv_count,
       uv_count, user_order_count, order_count, 
       order_amount, user_price, status, 
       is_del, create_time)
-    values (#{id,jdbcType=BIGINT}, #{date,jdbcType=DATE}, #{code,jdbcType=VARCHAR}, #{pvCount,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, #{code,jdbcType=VARCHAR}, #{pvCount,jdbcType=INTEGER},
       #{uvCount,jdbcType=INTEGER}, #{userOrderCount,jdbcType=INTEGER}, #{orderCount,jdbcType=INTEGER}, 
       #{orderAmount,jdbcType=DECIMAL}, #{userPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
       #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
@@ -44,6 +46,12 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="storeCode != null">
+        store_code,
+      </if>
+      <if test="storeName != null">
+        store_name,
       </if>
       <if test="date != null">
         date,
@@ -83,6 +91,12 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="storeCode != null">
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
       <if test="date != null">
         #{date,jdbcType=DATE},
       </if>
@@ -121,6 +135,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.DailyInfo">
     update tb_daily_info
     <set>
+      <if test="storeCode != null">
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
       <if test="date != null">
         date = #{date,jdbcType=DATE},
       </if>
@@ -159,7 +179,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chengzg.oms.entity.DailyInfo">
     update tb_daily_info
-    set date = #{date,jdbcType=DATE},
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
       code = #{code,jdbcType=VARCHAR},
       pv_count = #{pvCount,jdbcType=INTEGER},
       uv_count = #{uvCount,jdbcType=INTEGER},
@@ -183,6 +205,9 @@
       </if>
       <if test="code != null and code != ''">
         AND code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="storeCode != null and storeCode != ''">
+        AND store_code = #{storeCode,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>

@@ -3,6 +3,8 @@
 <mapper namespace="com.chengzg.oms.mapper.DailyDetailMapper">
   <resultMap id="BaseResultMap" type="com.chengzg.oms.entity.DailyDetail">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
     <result column="date" jdbcType="DATE" property="date" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="daily_code" jdbcType="VARCHAR" property="dailyCode" />
@@ -24,7 +26,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, date, code, daily_code, spu_code, spu_name, sku_code, sku_name, pv_count, uv_count, 
+    id, store_code, store_name, date, code, daily_code, spu_code, spu_name, sku_code, sku_name, pv_count, uv_count,
     order_count, user_order_count, order_amount, sum_jin, sum_cost, sum_freight, gross_profit, 
     gross_profit_rate, is_del, create_time
   </sql>
@@ -39,14 +41,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.chengzg.oms.entity.DailyDetail">
-    insert into tb_daily_detail (id, date, code, daily_code, 
+    insert into tb_daily_detail (id, store_code, store_name, date, code, daily_code,
       spu_code, spu_name, sku_code, 
       sku_name, pv_count, uv_count, 
       order_count, user_order_count, order_amount, 
       sum_jin, sum_cost, sum_freight, 
       gross_profit, gross_profit_rate, is_del, 
       create_time)
-    values (#{id,jdbcType=BIGINT}, #{date,jdbcType=DATE}, #{code,jdbcType=VARCHAR}, #{dailyCode,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{storeCode,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, #{code,jdbcType=VARCHAR}, #{dailyCode,jdbcType=VARCHAR},
       #{spuCode,jdbcType=VARCHAR}, #{spuName,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, 
       #{skuName,jdbcType=VARCHAR}, #{pvCount,jdbcType=INTEGER}, #{uvCount,jdbcType=INTEGER}, 
       #{orderCount,jdbcType=INTEGER}, #{userOrderCount,jdbcType=INTEGER}, #{orderAmount,jdbcType=DECIMAL}, 
@@ -59,6 +61,12 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="storeCode != null">
+        store_code,
+      </if>
+      <if test="storeName != null">
+        store_name,
       </if>
       <if test="date != null">
         date,
@@ -122,6 +130,12 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="storeCode != null">
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
       <if test="date != null">
         #{date,jdbcType=DATE},
       </if>
@@ -184,6 +198,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.DailyDetail">
     update tb_daily_detail
     <set>
+      <if test="storeCode != null">
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
       <if test="date != null">
         date = #{date,jdbcType=DATE},
       </if>
@@ -246,7 +266,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chengzg.oms.entity.DailyDetail">
     update tb_daily_detail
-    set date = #{date,jdbcType=DATE},
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
       code = #{code,jdbcType=VARCHAR},
       daily_code = #{dailyCode,jdbcType=VARCHAR},
       spu_code = #{spuCode,jdbcType=VARCHAR},
@@ -285,6 +307,9 @@
       </if>
       <if test="code != null and code != ''">
         AND code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="storeCode != null and storeCode != ''">
+        AND store_code = #{storeCode,jdbcType=VARCHAR}
       </if>
     </where>
   </sql>

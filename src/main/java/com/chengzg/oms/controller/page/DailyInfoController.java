@@ -7,10 +7,12 @@ import com.chengzg.oms.controller.support.PageResponse;
 import com.chengzg.oms.controller.support.ReturnResult;
 import com.chengzg.oms.entity.DailyInfo;
 import com.chengzg.oms.entity.SkuInfo;
+import com.chengzg.oms.entity.StoreInfo;
 import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.model.req.SearchDailyInfoReq;
 import com.chengzg.oms.model.req.SearchSkuInfoReq;
 import com.chengzg.oms.service.DailyInfoService;
+import com.chengzg.oms.service.StoreInfoService;
 import com.chengzg.oms.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +41,15 @@ public class DailyInfoController extends BaseController {
     @Autowired
     private DailyInfoService dailyInfoService;
 
+    @Autowired
+    private StoreInfoService storeInfoService;
+
     @RequestMapping(value="toDailyManagerPage",method={RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
     ModelAndView toDailyManagerPage(HttpServletRequest request, HttpServletResponse response) {
         try {
+            List<StoreInfo> storeList = storeInfoService.getAllList();
+            request.setAttribute("storeList", storeList);
             return new ModelAndView("dailyinfo/DailyManagerPage");
         } catch (ServiceException e) {
             logger.error("getSysTime CommonException异常", e);
@@ -60,11 +67,13 @@ public class DailyInfoController extends BaseController {
     public PageResponse searchDailyInfoList(HttpServletRequest request, HttpServletResponse response) {
         Integer pageNum = HttpUtil.getIntegerParameter(request, "page", 1);
         Integer pageSize = HttpUtil.getIntegerParameter(request, "rows", 10);
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
 
         String date = HttpUtil.getParameter(request, "date", null);
 
         SearchDailyInfoReq where = SearchDailyInfoReq.builder()
                 .date(StrUtils.isNullOrBlank(date) ? null : TimeUtility.getDateByStr(date, TimeUtility.TIME_FORMAT_YYYY_MM_DD))
+                .storeCode(storeCode)
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
@@ -80,6 +89,8 @@ public class DailyInfoController extends BaseController {
     public @ResponseBody
     ModelAndView toImportDailyInfoPage(HttpServletRequest request, HttpServletResponse response) {
         try {
+            List<StoreInfo> storeList = storeInfoService.getAllList();
+            request.setAttribute("storeList", storeList);
             return new ModelAndView("dailyinfo/ImportDailyInfoPage");
         } catch (ServiceException e) {
             logger.error("toImportDailyInfoPage CommonException异常", e);
@@ -97,6 +108,10 @@ public class DailyInfoController extends BaseController {
 
         logger.info(" importDailyInfo start  !");
 
+        String storeCode = HttpUtil.getParameter(request, "storeCode", null);
+
+        StoreInfo storeInfo = storeInfoService.getStoreInfoByCode(storeCode);
+        Asserts.checkNullOrEmpty(storeInfo, "商铺信息不正确，请确认");
         File excelFile = HttpUtil.getFileByRequest(request);
         if (excelFile == null) {
             return this.errorReturn(100);
@@ -105,7 +120,7 @@ public class DailyInfoController extends BaseController {
         JSONObject excelObj = ExcelUtil.importExcel(excelFile.getPath(), 1);
         logger.info("" + excelObj.size());
 
-        dailyInfoService.importDailyInfo(excelObj);
+        dailyInfoService.importDailyInfo(storeInfo, excelObj);
         return this.successReturn(null);
     }
 

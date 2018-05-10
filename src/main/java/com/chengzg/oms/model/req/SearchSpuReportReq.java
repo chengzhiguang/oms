@@ -14,6 +14,8 @@ import java.util.Date;
 @Builder
 @ToString
 public class SearchSpuReportReq {
+    private String storeCode;
+
     private String code;
 
     private Date date;

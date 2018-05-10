@@ -21,6 +21,14 @@
         <legend>筛选</legend>
         <table class="tableForm">
             <tr>
+                <th>商铺：</th>
+                <td>
+                    <select id="storeCode" name="storeCode" class="easyui-combobox" style="width:200px;height:30px">
+                        <c:forEach items="${storeList}" var="item">
+                            <option  value="${item.storeCode }">${item.storeName}</option>
+                        </c:forEach>
+                    </select>
+                </td>
                 <th>SPU名称：</th>
                 <th>
                     <input class="easyui-datebox" style="width:145px" id="date" name="date" data-options="formatter:myformatter,parser:myparser"></input>
@@ -76,6 +84,11 @@
                 formatter : function(value, rowData, rowIndex) {
                     return rowIndex+1;
                 }
+            } ,{
+                title : '商铺',
+                field : 'storeName',
+                width : 40,
+
             } ,{
                 title : '日期',
                 field : 'dateStr',
@@ -142,6 +155,7 @@
 
     function searchFun() {
         datagrid.datagrid('load', {
+            storeCode : $("#storeCode").combobox('getValue'),
             date : $("#date").datebox("getValue"),
         });
     }

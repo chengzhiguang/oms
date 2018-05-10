@@ -23,6 +23,14 @@
 
             <table class="tableForm">
                 <tr>
+                    <th>商铺：</th>
+                    <td>
+                        <select id="storeCode" name="storeCode" class="easyui-combobox" style="width:200px;height:30px">
+                            <c:forEach items="${storeList}" var="item">
+                                <option  value="${item.storeCode }">${item.storeName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
                     <th>日期：</th>
                     <th>
                         <input class="easyui-datebox" style="width:145px" id="date" name="date" data-options="formatter:myformatter,parser:myparser"></input>
@@ -158,6 +166,7 @@
 
     function searchFun() {
         datagrid.datagrid('load', {
+            storeCode : $("#storeCode").combobox('getValue'),
             date : $("#date").datebox("getValue"),
         });
     }

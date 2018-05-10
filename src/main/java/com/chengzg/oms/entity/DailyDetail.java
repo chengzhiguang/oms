@@ -13,6 +13,10 @@ import java.util.Date;
 public class DailyDetail {
     private Long id;
 
+    private String storeCode;
+
+    private String storeName;
+
     private Date date;
 
     private String dateStr;
