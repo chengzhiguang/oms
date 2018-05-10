@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chengzg.oms.entity.DailyDetail;
 import com.chengzg.oms.entity.DailyInfo;
 import com.chengzg.oms.entity.SkuInfo;
+import com.chengzg.oms.enums.DailyInfoStatus;
 import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.mapper.DailyDetailMapper;
 import com.chengzg.oms.mapper.DailyInfoMapper;
@@ -54,7 +55,7 @@ public class DailyInfoServiceImpl implements DailyInfoService {
         List<DailyInfo> list = dailyInfoMapper.searchDailyListByWhere(req);
         for (DailyInfo dailyInfo : list) {
             dailyInfo.setDateStr(TimeUtility.formatTimeStr(dailyInfo.getDate(), TimeUtility.TIME_FORMAT_YYYY_MM_DD));
-
+            dailyInfo.setStatusStr(DailyInfoStatus.lookup.get(dailyInfo.getStatus()));
         }
         return list;
     }

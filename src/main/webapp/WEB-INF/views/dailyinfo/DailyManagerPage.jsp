@@ -109,7 +109,7 @@
                 width : 40,
             }, {
                 title : '状态',
-                field : 'status',
+                field : 'statusStr',
                 width : 40,
             } , {
                 title : '操作',

@@ -33,6 +33,8 @@ public class DailyInfo {
 
     private Integer status;
 
+    private String statusStr;
+
     private Integer isDel;
 
     private Date createTime;
