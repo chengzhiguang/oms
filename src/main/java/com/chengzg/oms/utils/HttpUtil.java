@@ -1,6 +1,7 @@
 package com.chengzg.oms.utils;
 
 
+import com.chengzg.oms.entity.UserInfo;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,10 @@ public class HttpUtil {
     private static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     public static String urlFile = "/home/chengzg/tempfile/";
+
+    public static UserInfo getSessionSysUser(HttpServletRequest request) {
+        return (UserInfo) request.getSession().getAttribute("userInfo");
+    }
 
     public static String getTextContent(InputStream inputStream, String encoding) throws Exception {
         byte[] data = readStream(inputStream);

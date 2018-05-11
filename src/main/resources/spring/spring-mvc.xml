@@ -38,6 +38,10 @@
             <mvc:mapping path="/api/**" />
             <bean class="com.chengzg.oms.interceptor.WhiteListInterceptor" />
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/page/**" />
+            <bean class="com.chengzg.oms.interceptor.LoginInterceptor" />
+        </mvc:interceptor>
 
     </mvc:interceptors>
 

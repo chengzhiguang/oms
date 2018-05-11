@@ -1,6 +1,7 @@
 package com.chengzg.oms.service.impl;
 
 import com.chengzg.oms.entity.UserInfo;
+import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.mapper.UserInfoMapper;
 import com.chengzg.oms.model.req.SearchUserInfoReq;
 import com.chengzg.oms.service.UserInfoService;
@@ -44,6 +45,18 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo getUserInfoByCode(String userCode) {
         UserInfo userInfo = userInfoMapper.getUserInfoByCode(userCode);
+        return userInfo;
+    }
+
+    @Override
+    public UserInfo checkLogin(String userCode, String userPwd) {
+        UserInfo userInfo = userInfoMapper.getUserInfoByCode(userCode);
+        if (userInfo == null) {
+            throw new ServiceException(100, "用户名错误");
+        }
+        if (!userInfo.getUserPwd().equals(userPwd)) {
+            throw new ServiceException(100, "密码错误");
+        }
         return userInfo;
     }
 }

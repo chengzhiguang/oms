@@ -153,7 +153,7 @@
     select
     <include refid="Base_Column_List" />
     from tb_user_info
-    AND is_del = 0 and user_code = #{userCode,jdbcType=VARCHAR}
+    WHERE is_del = 0 and user_code = #{userCode,jdbcType=VARCHAR}
     order by id DESC
   </select>
 

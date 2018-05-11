@@ -14,4 +14,6 @@ public interface UserInfoService {
     List<UserInfo> searchListByWhere(SearchUserInfoReq req);
 
     UserInfo getUserInfoByCode(String userCode);
+
+    UserInfo checkLogin(String userCode, String userPwd);
 }
