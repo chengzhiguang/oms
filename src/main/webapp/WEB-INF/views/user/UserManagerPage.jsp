@@ -85,7 +85,7 @@
 
             } ,{
                 title : '员工类别',
-                field : 'userType',
+                field : 'userTypeName',
                 width : 40,
 
             } , {

@@ -1,6 +1,7 @@
 package com.chengzg.oms.service.impl;
 
 import com.chengzg.oms.entity.UserInfo;
+import com.chengzg.oms.enums.UserType;
 import com.chengzg.oms.exception.ServiceException;
 import com.chengzg.oms.mapper.UserInfoMapper;
 import com.chengzg.oms.model.req.SearchUserInfoReq;
@@ -36,8 +37,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
 
         List<UserInfo> list = userInfoMapper.searchListByWhere(req);
-        for (UserInfo dailyInfo : list) {
-
+        for (UserInfo userInfo : list) {
+            userInfo.setUserTypeName(UserType.lookup.get(userInfo.getUserType()));
         }
         return list;
     }

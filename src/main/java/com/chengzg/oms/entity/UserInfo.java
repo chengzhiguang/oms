@@ -20,6 +20,8 @@ public class UserInfo {
 
     private String userType;
 
+    private String userTypeName;
+
     private Integer isDel;
 
     private Date createTime;
