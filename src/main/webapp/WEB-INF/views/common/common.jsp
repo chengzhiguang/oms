@@ -20,6 +20,8 @@
 
 <script type="text/javascript" src="<%=path %>/js/common.js"></script>
 <script type="text/javascript" src="<%=path %>/js/navbar.js"></script>
+<script type="text/javascript" src="<%=path %>/js/mqtt/paho-mqtt.js"></script>
+<script type="text/javascript" src="<%=path %>/js/mqtt/utility.js"></script>
 <c:set var="imgbasepath" value="${path}/img/" scope="session"/>
 <script type="text/javascript">
 	var contextPath = '<%=path%>';

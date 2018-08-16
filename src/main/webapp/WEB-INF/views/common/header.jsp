@@ -11,7 +11,16 @@
 	<c:if test="${userInfo != null}">
 		<div ><font color="white" size="4">你好，${userInfo.userName}</font></div>
 	</c:if>
+	<div class="panel-body collapse in fixed-height-panel-pre" id="consoleCollapse">
+		<pre id="consolePre" class="pre-scrollable"></pre>
+	</div>
+	<div class="panel-heading">
+		<span id="connectionStatus">Connection - Disconnected.</span>
+	</div>
 	<div  class="easyui-linkbutton" data-options="plain:true"  iconCls="icon-back" onclick="logout();"><font color="white" size="3">退出系统</font></div>
+	<div  class="easyui-linkbutton" data-options="plain:true"  iconCls="icon-back" onclick="connectionToggle();"><font color="white" size="3">mqtt</font></div>
+	<div  class="easyui-linkbutton" data-options="plain:true"  iconCls="icon-back" onclick="subscribe();"><font color="white" size="3">topic</font></div>
+
 </div>
 
 </div>
