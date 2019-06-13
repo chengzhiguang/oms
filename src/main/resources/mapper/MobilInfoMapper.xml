@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengzg.oms.mapper.MobilInfoMapper">
+  <resultMap id="BaseResultMap" type="com.chengzg.oms.entity.MobilInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="use_count" jdbcType="INTEGER" property="useCount" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uuid, imei, brand, model, use_count, is_del
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_mobil_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="getOne" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_mobil_info
+    where is_del = 0 order  by use_count asc limit 1
+  </select>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.oms.entity.MobilInfo">
+    update t_mobil_info
+    <set>
+      <if test="useCount != null">
+        use_count = #{useCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <sql id="whereSql">
+    <where>
+      AND is_del = 0
+      <if test="date != null">
+        AND date = #{date,jdbcType=DATE}
+      </if>
+      <if test="code != null and code != ''">
+        AND code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="storeCode != null and storeCode != ''">
+        AND store_code = #{storeCode,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="limitSql">
+    <if test="start != null and rows != null">
+      LIMIT #{start}, #{rows}
+    </if>
+  </sql>
+</mapper>
