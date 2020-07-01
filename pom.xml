@@ -23,7 +23,7 @@
         <logback.version>1.1.1</logback.version>
         <slf4j.version>1.7.14</slf4j.version>
         <dbutils.version>1.6</dbutils.version>
-        <mysql.version>5.1.29</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <springframework.version>4.3.2.RELEASE</springframework.version>
         <aspectj.version>1.8.4</aspectj.version>
         <jackson.version>2.6.3</jackson.version>
