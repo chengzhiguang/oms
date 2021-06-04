@@ -31,7 +31,7 @@
         <mybatis-spring.version>1.2.3</mybatis-spring.version>
         <common-lang3.version>3.3.2</common-lang3.version>
         <guava.version>18.0</guava.version>
-        <httpclient.version>4.5.1</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <mockito.version>1.10.8</mockito.version>
         <jedis.version>2.8.0</jedis.version>
         <poi.version>3.9</poi.version>
