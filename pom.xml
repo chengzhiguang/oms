@@ -20,7 +20,7 @@
         <fastjson.version>1.1.41</fastjson.version>
         <archaius.version>0.6.0</archaius.version>
         <junit.version>4.11</junit.version>
-        <logback.version>1.1.1</logback.version>
+        <logback.version>1.2.0</logback.version>
         <slf4j.version>1.7.14</slf4j.version>
         <dbutils.version>1.6</dbutils.version>
         <mysql.version>5.1.29</mysql.version>
