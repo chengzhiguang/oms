@@ -26,7 +26,7 @@
         <mysql.version>5.1.29</mysql.version>
         <springframework.version>4.3.2.RELEASE</springframework.version>
         <aspectj.version>1.8.4</aspectj.version>
-        <jackson.version>2.6.3</jackson.version>
+        <jackson.version>2.9.10.8</jackson.version>
         <mybatis.version>3.3.0</mybatis.version>
         <mybatis-spring.version>1.2.3</mybatis-spring.version>
         <common-lang3.version>3.3.2</common-lang3.version>
