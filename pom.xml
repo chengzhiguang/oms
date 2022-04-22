@@ -24,7 +24,7 @@
         <slf4j.version>1.7.14</slf4j.version>
         <dbutils.version>1.6</dbutils.version>
         <mysql.version>5.1.29</mysql.version>
-        <springframework.version>4.3.2.RELEASE</springframework.version>
+        <springframework.version>5.3.19</springframework.version>
         <aspectj.version>1.8.4</aspectj.version>
         <jackson.version>2.6.3</jackson.version>
         <mybatis.version>3.3.0</mybatis.version>
